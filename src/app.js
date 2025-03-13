@@ -29,6 +29,8 @@ process.on("unhandledRejection", (err) => {
     process.exit(1); // Exit the process
 });
 
+// console.log(hello)
+
 
 app.use((err, req, res, next) => {
     const status = err.status || 500;

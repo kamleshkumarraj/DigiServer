@@ -41,3 +41,26 @@ export const updateUniversity = asyncErrorHandler(async (req, res, next) => {
     })
 
 })
+
+// now we write code for update universityId.
+export const updateUniversityId = asyncErrorHandler(async (req, res, next) => {
+    const {oldRegistrationId, newRegistrationId} = req.body;
+    const id = req.params.id;
+    
+    if(!mongoose.isValidObjectId(id)) return next(new ErrorHandler("Invalid University Id",400));
+
+    const university = await University.findOne({_id : id});
+
+    if(!university) return next(new ErrorHandler("University not found !",404));
+
+    if(! (await university.compareUniversityId(oldRegistrationId, newRegistrationId))) return next(new ErrorHandler("Invalid University Id",400));
+
+    const newUniversity = University.findOneAndUpdate({ _id : id }, { registrationId : newRegistrationId }, { new : true });
+
+    res.status(200).json({
+        success : true,
+        message : "University Id updated successfully",
+        data : newUniversity
+    })
+
+})

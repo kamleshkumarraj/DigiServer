@@ -1,7 +1,8 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose, { isValidObjectId, mongo } from "mongoose";
 import { asyncErrorHandler } from "../errors/asynError";
 import { ErrorHandler } from "../errors/errorHandler";
 import { University } from "../models/university.model";
+import { removeMultipleFileFromCloudinary, uploadMultipleFilesOnCloudinary } from "../helper/helper";
 
 
 // code for creating new university
@@ -64,3 +65,38 @@ export const updateUniversityId = asyncErrorHandler(async (req, res, next) => {
     })
 
 })
+
+// now we write code for update university image.
+const updateUniversityImage = asyncErrorHandler(async (req, res, next) => {
+    const {id} = req.params;
+    const image = req.file.path;
+
+    if(!isValidObjectId(id)) return next(new ErrorHandler("Invalid University Id",400));
+
+    const university = await University.findOne({ _id : id });
+
+    if(!university) return next(new ErrorHandler("University not found !",404));
+
+    // first we delete old image from cloudinary.
+    if(university?.image?.public_id){
+        const {success, error} =  await removeMultipleFileFromCloudinary([university?.image?.public_id]);
+
+        if(!success) return next(new ErrorHandler(error , 400));
+    }
+
+    // now we upload new image on cloudinary;
+    const {success, results} = await uploadMultipleFilesOnCloudinary([image]);
+
+    if(!success) return next(new ErrorHandler(error,400));
+    
+    const public_id = results[0].public_id;
+    const url = results[0].url;
+
+    const newUniversity = await University.findOneAndUpdate({ _id : id }, { image : {public_id , url} }, { new : true });
+
+    res.status(200).json({
+        success : true,
+        message : "University image updated successfully",
+        data : newUniversity
+    })
+});

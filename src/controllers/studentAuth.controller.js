@@ -46,3 +46,19 @@ export const register = asyncErrorHandler(async (req, res, next) => {
 
 
 })
+
+// now we write controller for login student.
+export const login = asyncErrorHandler(async (req, res, next) => {
+  const {username, email, password} = req.body;
+
+  // first we check student is registered or not.
+  const student = await Student.findOne({$or : [{email, username}]}).select("+password");
+
+  if(!student) return next(new ErrorHandler("Invalid credentials !",400));
+
+  // if student is registered the we compare the password.
+  if(! (await student.comparePassword(password))) return next(new ErrorHandler("Invalid credentials !",400));
+
+  // if password is correct then we login the student.
+  loginWithJWT(student, res);
+})

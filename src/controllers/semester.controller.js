@@ -52,3 +52,14 @@ export const deleteSemester = asyncErrorHandler(async (req, res, next) => {
         message : "Semester deleted successfully !"
     })
 })
+
+// now we write controller for getting all semesters from specific branch.
+export const getAllSemester = asyncErrorHandler(async (req, res, next) => {
+    const branchId = req.params.branchId;
+    const semesters = await Semester.find({branchId});
+    res.status(200).json({
+        success : true,
+        message : "Semesters fetched successfully !",
+        data : semesters
+    })
+})

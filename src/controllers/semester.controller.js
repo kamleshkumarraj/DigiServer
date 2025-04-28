@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { asyncErrorHandler } from "../errors/asynError.js";
 import { ErrorHandler } from "../errors/errorHandler";
 import { Semester } from "../models/semester.model.js";
@@ -35,5 +36,19 @@ export const updateSemester = asyncErrorHandler(async (req, res, next) => {
         success : true,
         message : "Semester updated successfully !",
         data : newSemester
+    })
+})
+
+// now we write code for deleting the semester.
+export const deleteSemester = asyncErrorHandler(async (req, res, next) => {
+    const id = req.params.id;
+
+    if(!mongoose.isValidObjectId(id)) return next(new ErrorHandler("Invalid Semester Id",400));
+
+    await Semester.findByIdAndDelete(id);
+
+    res.status(200).json({
+        success : true,
+        message : "Semester deleted successfully !"
     })
 })

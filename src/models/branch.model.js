@@ -13,7 +13,7 @@ const branchSchema = new mongoose.Schema({
         unique: true,
         uppercase: true
     },
-    collegeId: {
+    collageId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "College",
         required: true

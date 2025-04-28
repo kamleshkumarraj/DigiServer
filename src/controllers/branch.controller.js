@@ -51,4 +51,16 @@ export const getAllBranch = asyncErrorHandler(async (req, res, next) => {
     })
 })
 
-//
+// code for getting single brach using branch id.
+
+export const getSingleBranch = asyncErrorHandler(async (req, res, next) => {
+     const branchId = req.params.id;
+
+     const branch = await Branch.findById(branchId);
+     
+     res.status(200).json({
+        success : true,
+        message : "Branch fetched successfully !",
+        data : branch
+     })
+})

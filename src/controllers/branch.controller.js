@@ -36,3 +36,19 @@ export const deleteBranch = asyncErrorHandlers(async (req, res, next) => {
         message : "Branch delete successfully !"
     })
 })
+
+// code for get all branch from specific collage.
+
+export const getAllBranch = asyncErrorHandler(async (req, res, next) => {
+    const collageId = req.params.collageId;
+
+    const branches = await Branch.find(collageId);
+
+    res.status(200).json({
+        success : true,
+        message : "Branches fetched successfully !",
+        data : branches
+    })
+})
+
+//

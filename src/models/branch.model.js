@@ -18,10 +18,6 @@ const branchSchema = new mongoose.Schema({
         ref: "College",
         required: true
     },
-    departmentIds: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Department"
-    }],
     headOfBranch: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Faculty"

@@ -58,6 +58,16 @@ const studentSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : "Syllabus",
         required : true
+    },
+    avatar : {
+        public_id : {
+            type : String,
+            required : true
+        },
+        url : {
+            required : true,
+            type : String
+        }
     }
 },{timestamps : true})
 

@@ -17,3 +17,23 @@ export const createSemester = asyncErrorHandler(async (req, res, next) => {
         message : "Semester created successfully !",
     })
 })
+
+// now we write controller for updating semester.
+export const updateSemester = asyncErrorHandler(async (req, res, next) => {
+    const id = req.params.id;
+    const data = req.body;
+
+    if(!mongoose.isValidObjectId(id)) return next(new ErrorHandler("Invalid Semester Id",400));
+
+    const semester = await Semester.findOne({_id : id});
+
+    if(!semester) return next(new ErrorHandler("Semester doesn't exists !",404));
+
+    const newSemester = await Semester.findByIdAndUpdate({_id : id}, data, {new : true, runValidators: true});
+
+    res.status(200).json({
+        success : true,
+        message : "Semester updated successfully !",
+        data : newSemester
+    })
+})

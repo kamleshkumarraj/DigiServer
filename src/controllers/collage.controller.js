@@ -9,11 +9,6 @@ import { removeMultipleFileFromCloudinary, uploadMultipleFilesOnCloudinary } fro
 export const createCollage = asyncErrorHandler(async (req, next, next) => {
     const data = req.body;
     const collage = await Collage.findOne({ registrationId : data.registrationId });
-
-    
-
-
-
     if(collage){
         return next(new ErrorHandler("Collage already registered !",400));
     }

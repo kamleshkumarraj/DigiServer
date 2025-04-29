@@ -53,3 +53,14 @@ export const logoutFaculty = asyncErrorHandler(async (req, res, next) => {
         message: "User logged out successfully."
     })
 })
+
+// now we write controller for get the faculty profile.
+export const getMyProfileFaculty = asyncErrorHandler(async (req, res, next) => {
+    const myProfile = await Faculty.findById(req?.user);
+    
+    res.status(200).json({
+        success : true,
+        message : "My Profile",
+        data : myProfile
+    })
+})

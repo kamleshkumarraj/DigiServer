@@ -99,3 +99,23 @@ export const updateAvatarFaculty = asyncErrorHandler(async (req, res, next) => {
         data : newFaculty
     })
 })
+
+// now we write controller for update the profile of faculty.
+export const updateProfileFaculty = asyncErrorHandler(async (req, res, next) => {
+    const id = req.params.id;
+    const {firstName, lastName, email, username, password, collageId, semester, branchId, employeeId} = req.body;
+
+    if(!mongoose.isValidObjectId(id)) return next(new ErrorHandler("Invalid user id !",400));
+
+    const faculty = await Faculty.findById(id);
+
+    if(!faculty) return next(new ErrorHandler("User not found !",404));
+
+    const newFaculty = await Faculty.findOneAndUpdate({ _id : id }, req.body, { new : true, runValidators : true});
+
+    res.status(200).json({
+        success : true,
+        message : "Profile updated successfully !",
+        data : newFaculty
+    })
+})

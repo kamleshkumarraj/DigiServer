@@ -44,4 +44,12 @@ export const loginFaculty = asyncErrorHandler(async (req, res, next) => {
     loginWithJWT(faculty, res);
 })
 
-// now we
+// now we write the controller for logout the faculty.
+export const logoutFaculty = asyncErrorHandler(async (req, res, next) => {
+    res.clearCookie('token');
+    req.user = undefined;
+    res.cookie('token',undefined).status(200).json({
+        success: true,
+        message: "User logged out successfully."
+    })
+})

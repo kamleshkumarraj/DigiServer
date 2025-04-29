@@ -73,3 +73,14 @@ export const logout = asyncErrorHandler(async (req, res, next) => {
   })
 })
 
+export const getMyProfile = asyncErrorHandler(async (req, res, next) => {
+  const myProfile = await Student.findById(req?.user);
+
+  res.status(200).json({
+    success : true,
+    message : "My profile fetched successfully !",
+    data : myProfile
+  })
+})
+
+// 

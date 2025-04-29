@@ -1,6 +1,7 @@
 import { asyncErrorHandler } from "../errors/asynError.js";
 import { ErrorHandler } from "../errors/errorHandler.js";
 import { uploadMultipleFilesOnCloudinary } from "../helper/helper.js";
+import { Faculty } from "../models/faculty.model.js";
 
 export const registerFaculty = asyncErrorHandler(async (req, res, next) => {
     const {firstName, lastName, email, username, password, collageId, semester, branchId, employeeId} = req.body;
@@ -103,7 +104,7 @@ export const updateAvatarFaculty = asyncErrorHandler(async (req, res, next) => {
 // now we write controller for update the profile of faculty.
 export const updateProfileFaculty = asyncErrorHandler(async (req, res, next) => {
     const id = req.params.id;
-    const {firstName, lastName, email, username, password, collageId, semester, branchId, employeeId} = req.body;
+    const {firstName, lastName, email, username, password, collageId} = req.body;
 
     if(!mongoose.isValidObjectId(id)) return next(new ErrorHandler("Invalid user id !",400));
 
@@ -111,11 +112,53 @@ export const updateProfileFaculty = asyncErrorHandler(async (req, res, next) => 
 
     if(!faculty) return next(new ErrorHandler("User not found !",404));
 
-    const newFaculty = await Faculty.findOneAndUpdate({ _id : id }, req.body, { new : true, runValidators : true});
+    const newFaculty = await Faculty.findOneAndUpdate({ _id : id }, {firstName, lastName, email, username, password, collageId, semester : [semester], branchId : [branchId], employeeId}, { new : true, runValidators : true});
 
     res.status(200).json({
         success : true,
         message : "Profile updated successfully !",
+        data : newFaculty
+    })
+})
+
+// now we write the controller for add the semester of faculty.
+export const addSemesterFaculty = asyncErrorHandler(async (req, res, next) => {
+    const id = req.params.id;
+    const {semester} = req.body;
+
+    if(!mongoose.isValidObjectId(id)) return next(new ErrorHandler("Invalid user id !",400));
+
+    const faculty = await Faculty.findById(id);
+
+    if(!faculty) return next(new ErrorHandler("User not found !",404));
+
+    const newFaculty = await Faculty.findOneAndUpdate({ _id : id }, {semester : [...faculty?.semester, semester]}, { new : true, runValidators : true});
+
+    // await Faculty.updateOne({_id : id}, {$push : {semester : semester}});
+
+    res.status(200).json({
+        success : true,
+        message : "Semester added successfully !",
+        data : newFaculty
+    })
+})
+
+// now we write code for add the branch of faculty.
+export const addBranchFaculty = asyncErrorHandler(async (req, res, next) => {
+    const id = req.params.id;
+    const {branchId} = req.body;
+
+    if(!mongoose.isValidObjectId(id)) return next(new ErrorHandler("Invalid user id !",400));
+
+    const faculty = await Faculty.findById(id);
+
+    if(!faculty) return next(new ErrorHandler("User not found !",404));
+
+    const newFaculty = await Faculty.findOneAndUpdate({ _id : id }, {branchId : [...faculty?.branchId, branchId]}, { new : true, runValidators : true});
+
+    res.status(200).json({
+        success : true,
+        message : "Branch added successfully !",
         data : newFaculty
     })
 })

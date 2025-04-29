@@ -52,14 +52,14 @@ const facultySchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : "College"
     },
-    branchId : {
+    branchId : [{
         type : mongoose.Schema.Types.ObjectId,
         ref : "Branch"
-    },
-    semester : {
+    }],
+    semester : [{
         type : mongoose.Schema.Types.ObjectId,
         ref : "Semester"
-    },
+    }],
     avatar : {
         public_id : {
             type : String,

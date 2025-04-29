@@ -64,3 +64,38 @@ export const getMyProfileFaculty = asyncErrorHandler(async (req, res, next) => {
         data : myProfile
     })
 })
+
+// now we write the controller for update the faculty avatar.
+export const updateAvatarFaculty = asyncErrorHandler(async (req, res, next) => {
+    const id = req.params.id;
+    const avatar = req.file.path;
+
+    if(!mongoose.isValidObjectId(id)) return next(new ErrorHandler("Invalid user id !",400));
+
+    const faculty = await Faculty.findById(id);
+
+    if(!faculty) return next(new ErrorHandler("User not found !",404));
+
+    // first we delete the existing avatar.
+    if(faculty?.avatar?.public_id){
+        const {success, error} =  await removeMultipleFileFromCloudinary([faculty?.avatar?.public_id]);
+
+        if(!success) return next(new ErrorHandler(error , 400));
+    }
+
+    // now we upload new avatar on cloudinary.
+    const {success, results} = await uploadMultipleFilesOnCloudinary([avatar]);
+
+    if(!success) return next(new ErrorHandler(error,400));
+    
+    const public_id = results[0].public_id;
+    const url = results[0].url;
+
+    const newFaculty = await Faculty.findOneAndUpdate({ _id : id }, { avatar : {public_id , url} }, { new : true });
+
+    res.status(200).json({
+        success : true,
+        message : "Avatar updated successfully !",
+        data : newFaculty
+    })
+})

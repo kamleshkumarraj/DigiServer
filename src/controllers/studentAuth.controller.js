@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { asyncErrorHandler } from "../errors/asynError";
 import { ErrorHandler } from "../errors/errorHandler";
 import { uploadMultipleFilesOnCloudinary } from "../helper/helper";
@@ -83,4 +84,37 @@ export const getMyProfile = asyncErrorHandler(async (req, res, next) => {
   })
 })
 
-// 
+// now we write controller for update the student avatar.
+export const updateAvatar = asyncErrorHandler(async (req, res, next) => {
+  const id = req.params.id;
+  const avatar = req.file.path;
+
+  if(!mongoose.isValidObjectId(id)) return next(new ErrorHandler("Invalid user id !",400));
+
+  const student = await Student.findById(id);
+
+  if(!student) return next(new ErrorHandler("User not found !",404));
+
+  // first we delete the existing avatar.
+  if(student?.avatar?.public_id){
+    const {success, error} =  await removeMultipleFileFromCloudinary([student?.avatar?.public_id]);
+
+    if(!success) return next(new ErrorHandler(error , 400));
+  }
+
+  // now we upload new avatar on cloudinary.
+  const {success, results} = await uploadMultipleFilesOnCloudinary([avatar]);
+
+  if(!success) return next(new ErrorHandler(error,400));
+  
+  const public_id = results[0].public_id;
+  const url = results[0].url;
+
+  const newStudent = await Student.findOneAndUpdate({ _id : id }, { avatar : {public_id , url} }, { new : true });
+
+  res.status(200).json({
+    success : true,
+    message : "Avatar updated successfully !",
+    data : newStudent
+  })
+})

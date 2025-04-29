@@ -47,6 +47,32 @@ const facultySchema = new mongoose.Schema({
         max : [50 , "Employee ID must be less than 50 characters"],
         min : [3, "Employee ID must be more than 3 characters"],
         trim : true
+    },
+    collageId : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "College"
+    },
+    branchId : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Branch"
+    },
+    semester : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Semester"
+    },
+    avatar : {
+        public_id : {
+            type : String,
+            required : true
+        },
+        url : {
+            required : true,
+            type : String
+        }
+    },
+    university : {
+        types : mongoose.Schema.Types.ObjectId,
+        ref : "University"
     }
 })
 

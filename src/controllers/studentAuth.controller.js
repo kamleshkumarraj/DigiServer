@@ -1,8 +1,9 @@
 import mongoose from "mongoose";
-import { asyncErrorHandler } from "../errors/asynError";
-import { ErrorHandler } from "../errors/errorHandler";
-import { uploadMultipleFilesOnCloudinary } from "../helper/helper";
-import { Student } from "../models/student.model";
+import { asyncErrorHandler } from "../errors/asynError.js";
+import { ErrorHandler } from "../errors/errorHandler.js";
+import { uploadMultipleFilesOnCloudinary } from "../helper/helper.js";
+import { Student } from "../models/student.model.js";
+import { loginWithJWT } from "../utils/loginUsingJwt.utils.js";
 
 export const register = asyncErrorHandler(async (req, res, next) => {
   const {fistName, lastName, email, username, password, syllabus, semester, branch, university, collage} = req.body;

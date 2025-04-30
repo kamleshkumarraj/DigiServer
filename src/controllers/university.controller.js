@@ -1,8 +1,8 @@
 import mongoose, { isValidObjectId, mongo } from "mongoose";
-import { asyncErrorHandler } from "../errors/asynError";
-import { ErrorHandler } from "../errors/errorHandler";
-import { University } from "../models/university.model";
-import { removeMultipleFileFromCloudinary, uploadMultipleFilesOnCloudinary } from "../helper/helper";
+import { asyncErrorHandler } from "../errors/asynError.js";
+import { ErrorHandler } from "../errors/errorHandler.js";
+import { University } from "../models/university.model.js";
+import { removeMultipleFileFromCloudinary, uploadMultipleFilesOnCloudinary } from "../helper/helper.js";
 
 
 // code for creating new university

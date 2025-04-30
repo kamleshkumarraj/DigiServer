@@ -1,8 +1,8 @@
 import mongoose, { isValidObjectId, mongo } from "mongoose";
-import { asyncErrorHandler } from "../errors/asynError";
-import { ErrorHandler } from "../errors/errorHandler";
-import { Collage } from "../models/Collage.model";
-import { removeMultipleFileFromCloudinary, uploadMultipleFilesOnCloudinary } from "../helper/helper";
+import { asyncErrorHandler } from "../errors/asynError.js";
+import { ErrorHandler } from "../errors/errorHandler.js";
+import { Collage } from "../models/Collage.model.js";
+import { removeMultipleFileFromCloudinary, uploadMultipleFilesOnCloudinary } from "../helper/helper.js";
 
 
 // code for creating new Collage

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import { asyncErrorHandler } from "../errors/asynError";
-import { ErrorHandler } from "../errors/errorHandler";
-import { Branch } from "../models/branch.model";
+import { asyncErrorHandler } from "../errors/asynError.js";
+import { ErrorHandler } from "../errors/errorHandler.js";
+import { Branch } from "../models/branch.model.js";
 
 export const createBranch = asyncErrorHandler(async (req, res,  next) => {
     const {branchName, collageId, code, departmentIds,headOfBranch,hodMentors, totalSeats, studentsEnrolled } = req.body;

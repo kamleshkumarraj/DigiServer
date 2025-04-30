@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { asyncErrorHandler } from "../errors/asynError.js";
-import { ErrorHandler } from "../errors/errorHandler";
+import { ErrorHandler } from "../errors/errorHandler.js";
 import { Semester } from "../models/semester.model.js";
 
 export const createSemester = asyncErrorHandler(async (req, res, next) => {

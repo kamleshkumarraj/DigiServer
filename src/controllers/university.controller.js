@@ -67,7 +67,7 @@ export const updateUniversityId = asyncErrorHandler(async (req, res, next) => {
 })
 
 // now we write code for update university image.
-const updateUniversityImage = asyncErrorHandler(async (req, res, next) => {
+export const updateUniversityImage = asyncErrorHandler(async (req, res, next) => {
     const {id} = req.params;
     const image = req.file.path;
 

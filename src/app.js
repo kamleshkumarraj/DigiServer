@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import { universityRouter } from './routes/university.routes.js';
 
 export const app = express();
 
@@ -29,6 +30,8 @@ process.on("unhandledRejection", (err) => {
     process.exit(1); // Exit the process
 });
 
+// now we create router for each routes.
+app.use('/api/v1/university', universityRouter);
 // console.log(hello)
 
 

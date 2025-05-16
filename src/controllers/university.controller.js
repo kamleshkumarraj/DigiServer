@@ -6,7 +6,7 @@ import { removeMultipleFileFromCloudinary, uploadMultipleFilesOnCloudinary } fro
 
 
 // code for creating new university
-export const createUniversity = asyncErrorHandler(async (req, next, next) => {
+export const createUniversity = asyncErrorHandler(async (req, res, next) => {
     const data = req.body;
     const university = await University.findOne({ registrationId : data.registrationId });
 

@@ -5,6 +5,7 @@ dotenv.config({
 
 import { app } from "./app.js";
 import { connectDB } from "./db/connectDatabase.js";
+import { configCloudinary } from './config/cloudinary.config.js';
 
 app.get('/',(req, res) => {
     res.status(200).json({
@@ -21,4 +22,12 @@ connectDB()
 })
 .catch((err) => {
     console.log(`We can't start server because database connection failed due to this error : ${err}`)
+})
+
+configCloudinary()
+.then(() => {
+    console.log('Cloudinary configured successfully !')
+})
+.catch((err) => {
+    console.log(`Cloudinary configuration failed due to this error : ${err}`)
 })

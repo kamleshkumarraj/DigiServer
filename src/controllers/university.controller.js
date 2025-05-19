@@ -8,6 +8,16 @@ import { removeMultipleFileFromCloudinary, uploadMultipleFilesOnCloudinary } fro
 // code for creating new university
 export const createUniversity = asyncErrorHandler(async (req, res, next) => {
     const data = req.body;
+    // first we upload image on cloudinary.
+    const imagePath = req?.file?.path;
+    const {success, results} = await uploadMultipleFilesOnCloudinary([imagePath]);
+    if(!success) return next(new ErrorHandler(results, 400));
+
+    const public_id = results[0].public_id;
+    const url = results[0].url;
+    data.image = {public_id, url};
+    
+    // now we check if university already exists or not.
     const university = await University.findOne({ registrationId : data.registrationId });
 
     if(university){

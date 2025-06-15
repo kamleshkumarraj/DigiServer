@@ -5,9 +5,9 @@ const storage = multer.diskStorage({
     
     destination: (req, file, cb) => {
         if(fileType.includes(file.mimetype)){
-            cb(null, 'uploads/');
+            cb(null, 'src/uploads/');
         }else{
-            cb(false, 'uploads/');
+            cb(false, 'src/uploads/');
         }
     },
     filename: (req, file, cb) => {

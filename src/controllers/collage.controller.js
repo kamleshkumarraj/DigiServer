@@ -2,7 +2,7 @@ import mongoose, { isValidObjectId, mongo } from "mongoose";
 import { asyncErrorHandler } from "../errors/asynError.js";
 import { ErrorHandler } from "../errors/errorHandler.js";
 import { Collage } from "../models/Collage.model.js";
-import { removeMultipleFileFromCloudinary, uploadMultipleFilesOnCloudinary } from "../helper/helper.js";
+import { removeFile, removeMultipleFileFromCloudinary, uploadMultipleFilesOnCloudinary } from "../helper/helper.js";
 
 
 // code for creating new Collage
@@ -12,6 +12,21 @@ export const createCollage = asyncErrorHandler(async (req, res, next) => {
     if(collage){
         return next(new ErrorHandler("Collage already registered !",400));
     }
+    const image = req?.file;
+    if(!image) return next(new ErrorHandler("Collage image is required", 400));
+    // first we upload image on cloudinary.
+
+    const {success, results} = await uploadMultipleFilesOnCloudinary([image]);
+
+    if(!success) return next(new ErrorHandler(results, 400));
+
+    // now we write code for delete image that is present in uploads folder.
+    await removeFile([image]);
+    
+    const public_id = results[0].public_id;
+    const url = results[0].url;
+
+    data.image = {public_id, url};
 
     await Collage.create(data);
 

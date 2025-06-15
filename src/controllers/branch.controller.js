@@ -40,7 +40,7 @@ export const updateBranch = asyncErrorHandler(async (req, res, next) => {
 
 
 // now we write code for deleting brach from collage.
-export const deleteBranch = asyncErrorHandlers(async (req, res, next) => {
+export const deleteBranch = asyncErrorHandler(async (req, res, next) => {
     const id = req.params.id;
     if(!mongoose.isValidObjectId(id)) return next(new ErrorHandler("Invalid branch id !",400));
 

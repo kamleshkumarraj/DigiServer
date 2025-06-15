@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { universityRouter } from './routes/university.routes.js';
 import { collageRouter } from './routes/collage.routes.js';
+import { branchRouter } from './routes/branch.routes.js';
 
 export const app = express();
 
@@ -37,6 +38,9 @@ app.use('/api/v1/university', universityRouter);
 
 // now we configure routes for collage.
 app.use('/api/v1/collage', collageRouter);
+
+// now we configure routes for branch.
+app.use('/api/v1/branch', branchRouter);
 
 app.use((err, req, res, next) => {
     const status = err.status || 500;

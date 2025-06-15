@@ -2,17 +2,20 @@ import mongoose, { isValidObjectId, mongo } from "mongoose";
 import { asyncErrorHandler } from "../errors/asynError.js";
 import { ErrorHandler } from "../errors/errorHandler.js";
 import { University } from "../models/university.model.js";
-import { removeMultipleFileFromCloudinary, uploadMultipleFilesOnCloudinary } from "../helper/helper.js";
+import { removeFile, removeMultipleFileFromCloudinary, uploadMultipleFilesOnCloudinary } from "../helper/helper.js";
 
 
 // code for creating new university
 export const createUniversity = asyncErrorHandler(async (req, res, next) => {
     const data = req.body;
     // first we upload image on cloudinary.
-    const imagePath = req?.file?.path;
-    console.log(imagePath)
+    const imagePath = req?.file;
+    
     const {success, results} = await uploadMultipleFilesOnCloudinary([imagePath], 'digiCampus/images');
     if(!success) return next(new ErrorHandler(results, 400));
+
+    // now we write code for delete image that is present in uploads folder.
+    await removeFile([imagePath])
 
     const public_id = results[0].public_id;
     const url = results[0].url;

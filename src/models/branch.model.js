@@ -7,7 +7,7 @@ const branchSchema = new mongoose.Schema({
         unique: true,
         trim: true
     },
-    code: {
+    branchCode: {
         type: String,
         required: true,
         unique: true,

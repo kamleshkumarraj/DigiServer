@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { universityRouter } from './routes/university.routes.js';
+import { collageRouter } from './routes/collage.routes.js';
 
 export const app = express();
 
@@ -34,6 +35,8 @@ process.on("unhandledRejection", (err) => {
 app.use('/api/v1/university', universityRouter);
 // console.log(hello)
 
+// now we configure routes for collage.
+app.use('/api/v1/collage', collageRouter);
 
 app.use((err, req, res, next) => {
     const status = err.status || 500;

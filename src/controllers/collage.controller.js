@@ -6,7 +6,7 @@ import { removeMultipleFileFromCloudinary, uploadMultipleFilesOnCloudinary } fro
 
 
 // code for creating new Collage
-export const createCollage = asyncErrorHandler(async (req, next, next) => {
+export const createCollage = asyncErrorHandler(async (req, res, next) => {
     const data = req.body;
     const collage = await Collage.findOne({ registrationId : data.registrationId });
     if(collage){

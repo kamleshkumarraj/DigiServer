@@ -10,7 +10,8 @@ export const createUniversity = asyncErrorHandler(async (req, res, next) => {
     const data = req.body;
     // first we upload image on cloudinary.
     const imagePath = req?.file?.path;
-    const {success, results} = await uploadMultipleFilesOnCloudinary([imagePath]);
+    console.log(imagePath)
+    const {success, results} = await uploadMultipleFilesOnCloudinary([imagePath], 'digiCampus/images');
     if(!success) return next(new ErrorHandler(results, 400));
 
     const public_id = results[0].public_id;

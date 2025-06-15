@@ -12,13 +12,32 @@ export const createBranch = asyncErrorHandler(async (req, res,  next) => {
 
     if(branch) return next(new ErrorHandler("Already branch exists !",401));
 
-    const newBranch = await Branch.create({branchName, code, collegeId, departmentIds, headOfBranch, hodMentors, totalSeats, studentsEnrolled});
+    const newBranch = await Branch.create({branchName, code, collageId, departmentIds, headOfBranch, hodMentors, totalSeats, studentsEnrolled});
 
     res.status(200).json({
         success : true,
         message : "Branch registered successfully",
     })
 }) 
+
+// code for updating branch.
+export const updateBranch = asyncErrorHandler(async (req, res, next) => {
+    const id = req.params.id;
+    if(!mongoose.isValidObjectId(id)) return next(new ErrorHandler("Invalid branch id !",400));
+
+    const branch = await Branch.findById(id);
+
+    if(!branch) return next(new ErrorHandler("Branch doesn't exist !",404));
+
+    const updatedBranch = await Branch.findByIdAndUpdate(id, req.body, {new : true});
+
+    res.status(200).json({
+        success : true,
+        message : "Branch updated successfully !",
+        data : updatedBranch
+    })
+})
+
 
 // now we write code for deleting brach from collage.
 export const deleteBranch = asyncErrorHandlers(async (req, res, next) => {

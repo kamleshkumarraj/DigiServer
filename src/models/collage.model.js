@@ -45,6 +45,6 @@ const collageSchema = new Schema({
             required : true
         }
     }
-})
+},{timestamps : true});
 
 export const Collage = mongoose.model("Collage", collageSchema);

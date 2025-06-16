@@ -45,6 +45,6 @@ const universitySchema = new mongoose.Schema({
             required : true
         }
     }
-})
+},{timestamps : true})
 
 export const University = mongoose.model("University", universitySchema);

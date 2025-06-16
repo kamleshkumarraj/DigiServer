@@ -10,12 +10,12 @@ import { loginWithJWT } from "../utils/loginUsingJwt.utils.js";
 
 export const register = asyncErrorHandler(async (req, res, next) => {
   const {
-    fistName,
+    firstName,
     lastName,
     email,
     username,
     password,
-    syllabus,
+    classroom,
     semester,
     branch,
     university,
@@ -31,8 +31,8 @@ export const register = asyncErrorHandler(async (req, res, next) => {
 
   // now we upload the avatar on cloudinary.
   const { success, results } = await uploadMultipleFilesOnCloudinary([avatar]);
-
-  if (!success) return next(new ErrorHandler(error, 400));
+  
+  if (!success) return next(new ErrorHandler(results, 400));
 
   const public_id = results[0].public_id;
   const url = results[0].url;
@@ -40,12 +40,12 @@ export const register = asyncErrorHandler(async (req, res, next) => {
   await removeFile([avatar]);
 
   const data = {
-    fistName,
+    firstName,
     lastName,
     email,
     username,
     password,
-    syllabus,
+    classroom,
     semester,
     branch,
     university,

@@ -11,6 +11,16 @@ const classroomSchema = new mongoose.Schema({
         ref: "Semester",
         required: true
     },
+    classroomName : {
+        type: String,
+        required: true,
+        trim: true
+    },
+    classroomCode : {
+        type: String,
+        required: true,
+        trim: true
+    },
     topics: [{
         courseId: {
             type: mongoose.Schema.Types.ObjectId,

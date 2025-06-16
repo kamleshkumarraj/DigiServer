@@ -54,7 +54,7 @@ const studentSchema = new mongoose.Schema({
         ref : "Semester",
         required : true
     },
-    syllabus : {
+    classroom : {
         type : mongoose.Schema.Types.ObjectId,
         ref : "Syllabus",
         required : true

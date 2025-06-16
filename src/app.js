@@ -4,6 +4,7 @@ import { universityRouter } from "./routes/university.routes.js";
 import { collageRouter } from "./routes/collage.routes.js";
 import { branchRouter } from "./routes/branch.routes.js";
 import { semesterRouter } from "./routes/semester.routes.js";
+import { classroomRouter } from "./routes/classroom.routes.js";
 
 export const app = express();
 
@@ -51,6 +52,9 @@ app.use("/api/v1/branch", branchRouter);
 
 // now we configure routes for semester.
 app.use("/api/v1/semester", semesterRouter);
+
+// now we configure routes for classroom.
+app.use("/api/v1/classroom", classroomRouter);
 
 app.use((err, req, res, next) => {
   const status = err.status || 500;

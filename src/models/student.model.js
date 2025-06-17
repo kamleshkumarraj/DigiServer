@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-
+import bcrypt from "bcrypt";
+import jwt from 'jsonwebtoken'
 
 const studentSchema = new mongoose.Schema({
     firstName : {
@@ -70,5 +71,39 @@ const studentSchema = new mongoose.Schema({
         }
     }
 },{timestamps : true})
+
+studentSchema.pre('save' , async function(next){
+    if(!this.isModified('password')){
+        return next()
+    }
+    this.password = await bcrypt.hash(this.password , 10)
+})
+
+//method for creating new jwt token
+studentSchema.methods.getJWTToken = function(){
+    return jwt.sign({id : this._id},process.env.JWT_SECRET , {
+        
+    })
+}
+
+// Method for comparing the password in hash form.
+studentSchema.methods.comparePassword = async function(password){
+    let status =  await bcrypt.compare(password , this.password)
+    return status;
+}
+
+//method for generating resetPassword token.
+
+studentSchema.methods.generateResetPasswordToken = function(){
+    const resetToken = crypto.randomBytes(20).toString("hex")
+
+    const hashResetToken = crypto.createHash('sha256').update(resetToken).digest("hex")
+
+    this.resetPasswordToken = hashResetToken;
+    this.resetPasswordExpiry = Date.now() + 15*60*1000;
+
+    return resetToken;
+}
+
 
 export const Student = mongoose.model("Student", studentSchema);

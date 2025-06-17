@@ -24,7 +24,7 @@ export const register = asyncErrorHandler(async (req, res, next) => {
   const avatar = req.file;
 
   // first we check student is already registered or not.
-  const student = await Student.findOne({ $or: [{ email }, { username }] });
+  const student = await Student.findOne({ $or: [{ email : email }, { username : username }] });
 
   if (student)
     return next(new ErrorHandler("Student already registered !", 400));
@@ -67,11 +67,13 @@ export const register = asyncErrorHandler(async (req, res, next) => {
 // now we write controller for login student.
 export const login = asyncErrorHandler(async (req, res, next) => {
   const { username, email, password } = req.body;
-
+  console.log(email, password)
   // first we check student is registered or not.
-  const student = await Student.findOne({ $or: [{ email, username }] }).select(
-    "+password"
-  );
+  const student = await Student.findOne({
+    $or: [{ email: email }, { username: username }],
+  }).select("+password");
+
+  // console.log(student);
 
   if (!student) return next(new ErrorHandler("Invalid credentials !", 400));
 

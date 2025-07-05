@@ -2,6 +2,7 @@ import { asyncErrorHandler } from "../errors/asynError.js";
 import { ErrorHandler } from "../errors/errorHandler.js";
 import jwt from "jsonwebtoken";
 import { Student } from "../models/student.model.js";
+import { Faculty } from "../models/faculty.model.js";
 
 export const isAdmin = asyncErrorHandler((req, res, next) => {
     if(req.user.role = 'Admin'){
@@ -38,7 +39,7 @@ export const isProfessor = asyncErrorHandler((req, res, next) => {
 
 export const isLoggedIn = asyncErrorHandler(async (req, res, next) => {
     
-    const token = req.cookies?.token || req.headers?.authorization?.replace("Bearer ", "");
+    const token = req.cookies?.tokenUser || req.headers?.authorization?.replace("Bearer ", "");
 
     if(!token) {
         return next(new ErrorHandler("Please login to access this resources !", 401));
@@ -50,6 +51,24 @@ export const isLoggedIn = asyncErrorHandler(async (req, res, next) => {
     if(!user) return next(new ErrorHandler("User not found !", 404));
 
     req.user = user?._id;
+
+    next();
+})
+
+export const isFacultyLoggedIn = asyncErrorHandler(async (req, res, next) => {
+    
+    const token = req.cookies?.tokenFaculty || req.headers?.authorization?.replace("Bearer ", "");
+
+    if(!token) {
+        return next(new ErrorHandler("Please login to access this resources !", 401));
+    }
+
+    const decodedId = await jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await Faculty.findById(decodedId.id).select("-password -resetPasswordToken -resetPasswordExpiry");
+    if(!user) return next(new ErrorHandler("Faculty not found !", 404));
+
+    req.faculty = user?._id;
 
     next();
 })

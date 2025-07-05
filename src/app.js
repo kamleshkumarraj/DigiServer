@@ -10,6 +10,7 @@ import { semesterRouter } from "./routes/semester.routes.js";
 import { classroomRouter } from "./routes/classroom.routes.js";
 import { studentRouter } from "./routes/student.routes.js";
 import { facultyRouters } from "./routes/faculty.routes.js";
+import { syllabusRouter } from "./routes/syllabus.routes.js";
 
 export const app = express();
 
@@ -68,6 +69,9 @@ app.use("/api/v1/student", studentRouter);
 
 // now we configure faculty auth routes.
 app.use("/api/v1/faculty", facultyRouters);
+
+// now we configure syllabus routes.
+app.use("/api/v1/syllabus", syllabusRouter);
 
 app.use((err, req, res, next) => {
   const status = err.status || 500;

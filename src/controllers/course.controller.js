@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { asyncErrorHandler } from "../errors/asynError.js";
 import { Course } from "../models/course.model.js";
+import { Classroom } from "../models/classroom.model.js";
 
 export const createCourse = asyncErrorHandler(async (req, res, next) =>{
     const { courseName, courseCode, description, credits, courseType, assignTo, } = req.body;
@@ -47,4 +48,20 @@ export const updateCourse = asyncErrorHandler(async (req, res, next) => {
     })
 })
 
-// now we write 
+// now we write controller for deleting course.
+
+export const deleteCourse = asyncErrorHandler(async (req, res, next) => {
+    const courseId = req.params.id;
+
+    if(!mongoose.isValidObjectId(courseId)) return next(new ErrorHandler("Invalid course id !", 400));
+
+    // we will also delete this course id from classroom.
+    await Classroom.updateOne({"topics.courseId" : courseId} , {$pull : {topics : {courseId}}});
+
+    await Course.findByIdAndDelete(courseId);
+
+    res.status(200).json({
+        success: true,
+        message: "Course deleted successfully !"
+    })
+})

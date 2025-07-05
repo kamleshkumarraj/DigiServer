@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 
 const courseSchema = new mongoose.Schema({
-    classroomId : {
-        type : mongoose.Schema.ObjectId,
-        ref : "Classroom"
-    },
     courseCode: {
         type: String,
         required: true,
@@ -26,15 +22,22 @@ const courseSchema = new mongoose.Schema({
         required: true,
         enum: ["Core", "Elective", "Lab"]
     },
-    facultyId: {
+    assignTo: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Faculty",
         required: true
     },
-    // studentsEnrolled: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "Student"
-    // }],
+    createdBy : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Faculty",
+        required: true
+    },
+
+    description: {
+        type: String,
+        required: true,
+        trim: true
+    },
     
 },{timestamps : true});
 

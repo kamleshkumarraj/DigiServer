@@ -7,7 +7,7 @@ export const loginWithJWT = asyncErrorHandler(async (user, res, type = "User") =
         httpOnly : true,
         sameSite : "None"
     }
-    res.cookie('token', token, option).status(200).json({
+    res.cookie(`token${type}`, token, option).status(200).json({
         success : true,
         message : `${type} logged in successfully !`,
         token

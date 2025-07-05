@@ -21,7 +21,7 @@ export const isTutor = asyncErrorHandler((req, res, next) => {
 })
 
 export const isHOD = asyncErrorHandler((req, res, next) => {
-    if(req.user.role = 'HOD'){
+    if(req.faculty.role = 'HOD'){
         return next()
     }else{
         return next(new ErrorHandler("Only HOD can access this resources !",402))

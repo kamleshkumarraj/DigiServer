@@ -6,8 +6,9 @@ import { Faculty } from "../models/faculty.model.js";
 export const registerFaculty = asyncErrorHandler(async (req, res, next) => {
     const {firstName, lastName, email, username, password, collageId, semester, branchId, employeeId} = req.body;
 
+    
     // first we check the faculty is already exists or not.
-    const faculty = await Faculty.findOne({$or : [{email, username}]}).select("+password");
+    const faculty = await Faculty.findOne({$or : [{email, username}]});
 
     if(faculty) return next(new ErrorHandler("Faculty already registered !",400));
 

@@ -73,7 +73,12 @@ const facultySchema = new mongoose.Schema({
     university : {
         types : mongoose.Schema.Types.ObjectId,
         ref : "University"
-    }
-})
+    },
+    isActive : {
+        type : Boolean,
+        default : true
+    },
+    
+}, {timestamps : true})
 
 export const Faculty = mongoose.model("Faculty", facultySchema);

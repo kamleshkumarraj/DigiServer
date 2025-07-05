@@ -183,7 +183,7 @@ export const deleteProfile = asyncErrorHandler(async (req, res, next) => {
 
 // code for fetching complete student profile.
 export const getMyProfile = asyncErrorHandler(async (req, res, next) => {
-  const myProfile = await Student.aggregate([
+  const [myProfile] = await Student.aggregate([
     {
       $match : {
         _id : new mongoose.Types.ObjectId(req.user._id)
@@ -215,7 +215,7 @@ export const getMyProfile = asyncErrorHandler(async (req, res, next) => {
         pipeline : [
             {
               $project : {
-                universityName : 1,
+                name : 1,
                 image : 1,
                 _id : 0
               }

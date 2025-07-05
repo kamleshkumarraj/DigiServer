@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from 'cookie-parser'
+
+// only all routes are imported here.
 import { universityRouter } from "./routes/university.routes.js";
 import { collageRouter } from "./routes/collage.routes.js";
 import { branchRouter } from "./routes/branch.routes.js";

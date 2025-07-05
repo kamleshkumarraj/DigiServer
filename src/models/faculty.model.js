@@ -37,7 +37,8 @@ const facultySchema = new mongoose.Schema({
         trim : true
     },
     role : {
-        type : [],
+        type : [String],
+        required : [true, "Role is required"],
         enum : ["HOD", "HODMentor", "Professor", "Tutor", "Admin"]
     },
     employeeId : {
@@ -71,14 +72,14 @@ const facultySchema = new mongoose.Schema({
         }
     },
     university : {
-        types : mongoose.Schema.Types.ObjectId,
+        type : mongoose.Schema.Types.ObjectId,
         ref : "University"
     },
     isActive : {
         type : Boolean,
         default : true
     },
-    
+
 }, {timestamps : true})
 
 export const Faculty = mongoose.model("Faculty", facultySchema);

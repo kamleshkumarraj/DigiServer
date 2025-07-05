@@ -4,7 +4,7 @@ import { uploadMultipleFilesOnCloudinary } from "../helper/helper.js";
 import { Faculty } from "../models/faculty.model.js";
 
 export const registerFaculty = asyncErrorHandler(async (req, res, next) => {
-    const {firstName, lastName, email, username, password, collageId, semester, branchId, employeeId} = req.body;
+    const {firstName, lastName, email, username, password, collageId, semester, branchId, employeeId, role} = req.body;
 
     
     // first we check the faculty is already exists or not.
@@ -13,7 +13,7 @@ export const registerFaculty = asyncErrorHandler(async (req, res, next) => {
     if(faculty) return next(new ErrorHandler("Faculty already registered !",400));
 
     // first we upload the avatar of faculty on cloudinary.
-    const avatar = req.file.path;
+    const avatar = req.file;
     const {success, results} = await uploadMultipleFilesOnCloudinary([avatar]);
 
     if(!success) return next(new ErrorHandler(error,400));
@@ -22,7 +22,7 @@ export const registerFaculty = asyncErrorHandler(async (req, res, next) => {
     const url = results[0].url;
 
 
-    const newFaculty = await Faculty.create({firstName, lastName, email, username, password, collageId, semester : [semester], branchId : [branchId], employeeId, avatar: {public_id, url}});
+    const newFaculty = await Faculty.create({firstName, lastName, email, username, password, role, collageId, semester : [semester], branchId : [branchId], employeeId, avatar: {public_id, url}});
 
     res.status(200).json({
         success : true,

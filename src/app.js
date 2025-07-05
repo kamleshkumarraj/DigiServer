@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import cookieParser from 'cookie-parser'
 import { universityRouter } from "./routes/university.routes.js";
 import { collageRouter } from "./routes/collage.routes.js";
 import { branchRouter } from "./routes/branch.routes.js";
@@ -20,6 +21,8 @@ app.use(
     extended: true,
   })
 );
+
+app.use(cookieParser());
 
 app.use(
   cors({

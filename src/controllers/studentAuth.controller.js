@@ -67,7 +67,6 @@ export const register = asyncErrorHandler(async (req, res, next) => {
 // now we write controller for login student.
 export const login = asyncErrorHandler(async (req, res, next) => {
   const { username, email, password } = req.body;
-  console.log(email, password)
   // first we check student is registered or not.
   const student = await Student.findOne({
     $or: [{ email: email }, { username: username }],
@@ -95,15 +94,7 @@ export const logout = asyncErrorHandler(async (req, res, next) => {
   });
 });
 
-export const getMyProfile = asyncErrorHandler(async (req, res, next) => {
-  const myProfile = await Student.findById(req?.user);
 
-  res.status(200).json({
-    success: true,
-    message: "My profile fetched successfully !",
-    data: myProfile,
-  });
-});
 
 // now we write controller for update the student avatar.
 export const updateAvatar = asyncErrorHandler(async (req, res, next) => {
@@ -186,4 +177,145 @@ export const deleteProfile = asyncErrorHandler(async (req, res, next) => {
     success: true,
     message: "Profile deleted successfully !",
   });
+});
+
+
+
+// code for fetching complete student profile.
+export const getMyProfile = asyncErrorHandler(async (req, res, next) => {
+  const myProfile = await Student.aggregate([
+    {
+      $match : {
+        _id : new mongoose.Types.ObjectId(req.user._id)
+      }
+    },
+    {
+      $lookup : {
+        from : "collages",
+        localField : "collage",
+        foreignField : "_id",
+        as : "collage",
+        pipeline : [
+            {
+              $project : {
+                collageName : 1,
+                image : 1,
+                _id : 0
+              }
+            }
+        ]
+      }
+    },
+    {
+      $lookup : {
+        from : "universities",
+        localField : "university",
+        foreignField : "_id",
+        as : "university",
+        pipeline : [
+            {
+              $project : {
+                universityName : 1,
+                image : 1,
+                _id : 0
+              }
+            }
+        ]
+      }
+    },
+    {
+      $lookup : {
+        from : "branches",
+        localField : "branch",
+        foreignField : "_id",
+        as : "branch",
+        pipeline : [
+            {
+              $project : {
+                branchName : 1,
+                branchCode : 1,
+                hodMentors : 1,
+                headOfBranch : 1,
+                _id : 0
+              }
+            }
+        ]
+      }
+    },
+    {
+      $lookup : {
+        from : "semesters",
+        localField : "semester",
+        foreignField : "_id",
+        as : semester,
+        pipeline : [
+          {
+            $project : {
+              semesterNumber : 1,
+              totalCredits : 1,
+              startDate : 1,
+              endDate : 1,
+            }
+          }
+        ]
+      }
+    },
+    {
+      $lookup : {
+        from : 'classrooms',
+        localField : 'classroom',
+        foreignField : '_id',
+        as : 'classroom',
+        pipeline : [
+          {
+            $project : {
+              classroomName : 1,
+              topics : 1,
+              _id : 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      $unwind : "$collage"
+    },
+    {
+      $unwind : "$university"
+    },
+    {
+      $unwind : "$branch"
+    },
+    {
+      $unwind : "$semester"
+    },
+    {
+      $unwind : "$classroom"
+    },
+    {
+      $project : {
+        firstName : 1,
+        lastName : 1,
+        email : 1,
+        username : 1,
+        avatar : 1,
+        collage : 1,
+        university : 1,
+        branch : 1,
+        semester : 1,
+        classroom : 1
+      }
+    }
+  ])
+
+  if (!myProfile || myProfile.length === 0)
+    return next(new ErrorHandler("Profile not found !", 404));
+
+  res.status(200).json({
+    success: true,
+    message: "Profile fetched successfully !",
+    data: myProfile,
+  });
+
+  
 });

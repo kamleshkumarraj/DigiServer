@@ -247,7 +247,7 @@ export const getMyProfile = asyncErrorHandler(async (req, res, next) => {
         from : "semesters",
         localField : "semester",
         foreignField : "_id",
-        as : semester,
+        as : "semester",
         pipeline : [
           {
             $project : {

@@ -37,7 +37,7 @@ export const isProfessor = asyncErrorHandler((req, res, next) => {
 
 
 export const isLoggedIn = asyncErrorHandler(async (req, res, next) => {
-    console.log(req)
+    
     const token = req.cookies?.token || req.headers?.authorization?.replace("Bearer ", "");
 
     if(!token) {

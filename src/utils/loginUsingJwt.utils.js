@@ -1,6 +1,6 @@
 import { asyncErrorHandler } from "../errors/asynError.js";
 
-export const loginWithJWT = asyncErrorHandler(async (user, res) => {
+export const loginWithJWT = asyncErrorHandler(async (user, res, type = "User") => {
     const token = user.getJWTToken();
     const option = {
         expires : new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
@@ -9,7 +9,7 @@ export const loginWithJWT = asyncErrorHandler(async (user, res) => {
     }
     res.cookie('token', token, option).status(200).json({
         success : true,
-        message : "User logged in successfully !",
+        message : `${type} logged in successfully !`,
         token
     })
 })

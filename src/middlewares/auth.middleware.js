@@ -39,7 +39,7 @@ export const isProfessor = asyncErrorHandler((req, res, next) => {
 
 export const isLoggedIn = asyncErrorHandler(async (req, res, next) => {
     
-    const token = req.cookies?.tokenUser || req.headers?.authorization?.replace("Bearer ", "");
+    const token = req.cookies?.token || req.headers?.authorization?.replace("Bearer ", "");
 
     if(!token) {
         return next(new ErrorHandler("Please login to access this resources !", 401));

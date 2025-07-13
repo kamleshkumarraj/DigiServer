@@ -5,10 +5,10 @@ import {
   removeFile,
   uploadMultipleFilesOnCloudinary,
 } from "../helper/helper.js";
-import { Student } from "../models/student.model.js";
-import { loginWithJWT } from "../utils/loginUsingJwt.utils.js";
 import { Faculty } from "../models/faculty.model.js";
+import { Student } from "../models/student.model.js";
 import { User } from "../models/users.model.js";
+import { loginWithJWT } from "../utils/loginUsingJwt.utils.js";
 
 // controller for register student or faculty.
 export const register = asyncErrorHandler(async (req, res, next) => {
@@ -16,7 +16,7 @@ export const register = asyncErrorHandler(async (req, res, next) => {
     email,
     username,
     password,
-    roles,
+    role,
     profile
   } = req.body;
 
@@ -28,8 +28,8 @@ export const register = asyncErrorHandler(async (req, res, next) => {
   if (existingUser) return next(new ErrorHandler("User already registered !", 400));
 
   let userModel;
-  if(roles == 'student') userModel = Student;
-  else if(roles == 'faculty') userModel = Faculty;
+  if(role == 'student') userModel = Student;
+  else if(role == 'faculty') userModel = Faculty;
   else return next(new ErrorHandler("Invalid role !", 400));
 
   const userProfile = await userModel.create(profile);

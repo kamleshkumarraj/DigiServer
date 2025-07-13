@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
         ]
     },
 
-    roles : {
+    role : {
         type : String,
         enum : ['student', 'faculty', 'parent', 'admin'],
         required : true,
@@ -43,7 +43,7 @@ const userSchema = new mongoose.Schema({
 
     rolesId : {
         type: mongoose.Schema.Types.ObjectId,
-        refPath: 'roles',
+        refPath: 'role',
         required: true
     },
 
@@ -60,7 +60,7 @@ const userSchema = new mongoose.Schema({
 
 }, {timestamps : true});
 
-studentSchema.pre('save' , async function(next){
+userSchema.pre('save' , async function(next){
     if(!this.isModified('password')){
         return next()
     }
@@ -68,21 +68,21 @@ studentSchema.pre('save' , async function(next){
 })
 
 //method for creating new jwt token
-studentSchema.methods.getJWTToken = function(){
+userSchema.methods.getJWTToken = function(){
     return jwt.sign({id : this._id},process.env.JWT_SECRET , {
         
     })
 }
 
 // Method for comparing the password in hash form.
-studentSchema.methods.comparePassword = async function(password){
+userSchema.methods.comparePassword = async function(password){
     let status =  await bcrypt.compare(password , this.password)
     return status;
 }
 
 //method for generating resetPassword token.
 
-studentSchema.methods.generateResetPasswordToken = function(){
+userSchema.methods.generateResetPasswordToken = function(){
     const resetToken = crypto.randomBytes(20).toString("hex")
 
     const hashResetToken = crypto.createHash('sha256').update(resetToken).digest("hex")

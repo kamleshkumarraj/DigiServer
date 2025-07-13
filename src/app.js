@@ -11,6 +11,7 @@ import { classroomRouter } from "./routes/classroom.routes.js";
 import { studentRouter } from "./routes/student.routes.js";
 import { facultyRouters } from "./routes/faculty.routes.js";
 import { syllabusRouter } from "./routes/syllabus.routes.js";
+import { authRouter } from "./routes/auth.routes.js";
 
 export const app = express();
 
@@ -47,6 +48,9 @@ process.on("unhandledRejection", (err) => {
   console.error(`Unhandled Rejection: ${err.message}`);
   process.exit(1); // Exit the process
 });
+
+// now we configure routes for auth.
+app.use("/api/v1/auth", authRouter);
 
 // now we create router for each routes.
 app.use("/api/v1/university", universityRouter);

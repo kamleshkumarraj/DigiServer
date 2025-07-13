@@ -46,10 +46,11 @@ export const deleteProfile = asyncErrorHandler(async (req, res, next) => {
 
 // code for fetching complete student profile.
 export const getMyProfile = asyncErrorHandler(async (req, res, next) => {
+    console.log(req.user);
   const [myProfile] = await User.aggregate([
     {
       $match: {
-        _id: new mongoose.Types.ObjectId(req?.user),
+        _id: new mongoose.Types.ObjectId(req?.user?._id),
       },
     },
 

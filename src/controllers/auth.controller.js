@@ -7,29 +7,36 @@ import {
 } from "../helper/helper.js";
 import { Student } from "../models/student.model.js";
 import { loginWithJWT } from "../utils/loginUsingJwt.utils.js";
+import { Faculty } from "../models/faculty.model.js";
+import { User } from "../models/users.model.js";
 
+// controller for register student or faculty.
 export const register = asyncErrorHandler(async (req, res, next) => {
   const {
-    firstName,
-    lastName,
     email,
     username,
     password,
-    classroom,
-    semester,
-    branch,
-    university,
-    collage,
+    roles,
+    profile
   } = req.body;
+
   const avatar = req.file;
 
-  // first we check student is already registered or not.
-  const student = await Student.findOne({ $or: [{ email : email }, { username : username }] });
+  // first we check if user is already registered or not.
+  const existingUser = await User.findOne({$or: [{ email }, { username }] });
 
-  if (student)
-    return next(new ErrorHandler("Student already registered !", 400));
+  if (existingUser) return next(new ErrorHandler("User already registered !", 400));
 
-  // now we upload the avatar on cloudinary.
+  let userModel;
+  if(roles == 'student') userModel = Student;
+  else if(roles == 'faculty') userModel = Faculty;
+  else return next(new ErrorHandler("Invalid role !", 400));
+
+  const userProfile = await userModel.create(profile);
+
+  if (!avatar) return next(new ErrorHandler("Avatar is required !", 400));
+
+  //upload avatar on cloudinary.
   const { success, results } = await uploadMultipleFilesOnCloudinary([avatar]);
   
   if (!success) return next(new ErrorHandler(results, 400));
@@ -39,29 +46,25 @@ export const register = asyncErrorHandler(async (req, res, next) => {
 
   await removeFile([avatar]);
 
-  const data = {
-    firstName,
-    lastName,
+   // now we create user.
+  await User.create({
     email,
     username,
     password,
-    classroom,
-    semester,
-    branch,
-    university,
-    collage,
-    avatar: {
+    roles,
+    rolesId : userProfile?._id,
+    avatar : {
       public_id,
       url,
-    },
-  };
+    }
 
-  await Student.create(data);
+  })
 
   res.status(200).json({
     success: true,
     message: "Student registered successfully !",
   });
+
 });
 
 // now we write controller for login student.

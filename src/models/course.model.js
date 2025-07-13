@@ -20,7 +20,7 @@ const courseSchema = new mongoose.Schema({
     courseType: {
         type: String,
         required: true,
-        enum: ["Core", "Elective", "Lab"]
+        enum: ["core", "elective", "lab"]
     },
     assignTo: {
         type: mongoose.Schema.Types.ObjectId,

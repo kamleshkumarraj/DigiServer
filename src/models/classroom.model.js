@@ -21,14 +21,25 @@ const classroomSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    topics: [{
-        courseId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Course",
-            required: true
-        },
-        topicsCovered: [String]  // List of topics for each course
-    }],
+    core : [
+            {
+                type : mongoose.Schema.Types.ObjectId,
+                ref : "Course",
+            }
+    ],
+    elective : [
+            {
+                type : mongoose.Schema.Types.ObjectId,
+                ref : "Course",
+            }
+    ],
+    lab : [
+            {
+                type : mongoose.Schema.Types.ObjectId,
+                ref : "Course",
+            }
+    ],
+
    
 },{timestamps : true});
 

@@ -5,7 +5,6 @@ export const loginWithJWT = asyncErrorHandler(async (user, res, type = "User") =
     const option = {
         expires : new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
         httpOnly : true,
-        sameSite : "None"
     }
     res.cookie(`token${type}`, token, option).status(200).json({
         success : true,

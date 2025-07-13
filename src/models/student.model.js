@@ -60,6 +60,20 @@ const studentSchema = new mongoose.Schema({
         ref : "Syllabus",
         required : true
     },
+    section : {
+        type : String,
+        required : [true, "Section is required"],
+        trim : true,
+        max : [1, "Section must be less than 2 characters"],
+        min : [1, "Section must be more than 0 characters"]
+    },
+    batch : {
+        type : String,
+        required : [true, "Batch is required"],
+        trim : true,
+        max : [2, "Batch must be less than 3 characters"],
+        min : [1, "Batch must be more than 0 characters"]
+    },
     avatar : {
         public_id : {
             type : String,

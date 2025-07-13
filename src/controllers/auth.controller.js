@@ -89,9 +89,8 @@ export const login = asyncErrorHandler(async (req, res, next) => {
 
 // now we write controller for logout student.
 export const logout = asyncErrorHandler(async (req, res, next) => {
-  res.clearCookie("tokenUser");
   req.user = undefined;
-  res.cookie("tokenUser", undefined).status(200).json({
+  res.clearCookie("token").status(200).json({
     success: true,
     message: "User logged out successfully.",
   });

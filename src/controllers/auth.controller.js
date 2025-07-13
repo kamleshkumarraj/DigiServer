@@ -21,6 +21,7 @@ export const register = asyncErrorHandler(async (req, res, next) => {
   } = req.body;
 
   const avatar = req.file;
+  console.log(JSON.parse(profile))
 
   // first we check if user is already registered or not.
   const existingUser = await User.findOne({$or: [{ email }, { username }] });
@@ -32,7 +33,7 @@ export const register = asyncErrorHandler(async (req, res, next) => {
   else if(role == 'faculty') userModel = Faculty;
   else return next(new ErrorHandler("Invalid role !", 400));
 
-  const userProfile = await userModel.create(profile);
+  const userProfile = await userModel.create(JSON.parse(profile));
 
   if (!avatar) return next(new ErrorHandler("Avatar is required !", 400));
 
@@ -51,7 +52,7 @@ export const register = asyncErrorHandler(async (req, res, next) => {
     email,
     username,
     password,
-    roles,
+    role,
     rolesId : userProfile?._id,
     avatar : {
       public_id,
@@ -62,7 +63,7 @@ export const register = asyncErrorHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    message: "Student registered successfully !",
+    message: `${role} registered successfully !`,
   });
 
 });

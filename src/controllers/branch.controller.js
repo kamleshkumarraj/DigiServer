@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { asyncErrorHandler } from "../errors/asynError.js";
 import { ErrorHandler } from "../errors/errorHandler.js";
 import { Branch } from "../models/branch.model.js";
+import { User } from "../models/users.model.js";
 
 export const createBranch = asyncErrorHandler(async (req, res,  next) => {
     const data = req.body;
@@ -83,3 +84,23 @@ export const getSingleBranch = asyncErrorHandler(async (req, res, next) => {
         data : branch
      })
 })
+
+// code for assign hod for branch.
+export const assignHOD = asyncErrorHandler(async (req, res, next) => {
+    const {branchId} = req.params;
+    const {hodId} = req.body;
+
+    if(!mongoose.isValidObjectId(branchId)) return next(new ErrorHandler("Invalid branch id !",400));
+
+    const hod = await User.findById(hodId);
+    if(!hod) return next(new ErrorHandler("HOD doesn't exist !",404));
+
+    await Branch.findByIdAndUpdate({headOfBranch : hodId});
+
+    res.status(200).json({
+        success : true,
+        message : "HOD assigned successfully !",
+        data : hod
+    })
+});
+

@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
 const semesterSchema = new mongoose.Schema({
-    branchId: {
+    branchId: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Branch",
         required: true
-    },
+    }],
     semesterNumber: {
         type: Number,
         required: true,

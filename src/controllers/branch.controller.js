@@ -5,14 +5,14 @@ import { Branch } from "../models/branch.model.js";
 
 export const createBranch = asyncErrorHandler(async (req, res,  next) => {
     const data = req.body;
-
+    console.log(data)
     // first we check in this particular collage this branch is exist or not.
     
     const branch = await Branch.findOne({collageId : data?.collageId , code : data?.branchCode});
 
     if(branch) return next(new ErrorHandler("Already branch exists !",401));
 
-    const newBranch = await Branch.create(data);
+    await Branch.create(data);
 
     res.status(200).json({
         success : true,

@@ -78,6 +78,7 @@ app.use("/api/v1/faculty", facultyRouters);
 app.use("/api/v1/syllabus", syllabusRouter);
 
 app.use((err, req, res, next) => {
+  console.log(err.stack)
   const status = err.status || 500;
   const message = err.message || "Something went wrong";
   return res.status(status).json({

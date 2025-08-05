@@ -4,13 +4,11 @@ const branchSchema = new mongoose.Schema({
     branchName: {
         type: String,
         required: true,
-        unique: true,
         trim: true
     },
     branchCode: {
         type: String,
         required: true,
-        unique: true,
         uppercase: true
     },
     collageId: {

@@ -21,7 +21,6 @@ export const register = asyncErrorHandler(async (req, res, next) => {
   } = req.body;
 
   const avatar = req.file;
-  console.log(JSON.parse(profile))
 
   // first we check if user is already registered or not.
   const existingUser = await User.findOne({$or: [{ email }, { username }] });

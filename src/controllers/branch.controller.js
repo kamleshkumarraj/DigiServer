@@ -9,7 +9,7 @@ export const createBranch = asyncErrorHandler(async (req, res,  next) => {
     console.log(data)
     // first we check in this particular collage this branch is exist or not.
     
-    const branch = await Branch.findOne({collageId : data?.collageId , code : data?.branchCode});
+    const branch = await Branch.findOne({collageId : data?.collageId , branchCode : data?.branchCode});
 
     if(branch) return next(new ErrorHandler("Already branch exists !",401));
 

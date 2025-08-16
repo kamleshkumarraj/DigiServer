@@ -1,16 +1,22 @@
 import mongoose from "mongoose";
 
 const semesterSchema = new mongoose.Schema({
-    branchId: [{
+    branchId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Branch",
         required: true
-    }],
+    },
     semesterNumber: {
         type: Number,
         required: true,
         min: 1,
         max: 8
+    },
+    semesterCode : {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
     },
     totalCredits: {
         type: Number,

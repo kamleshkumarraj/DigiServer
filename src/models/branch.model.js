@@ -18,11 +18,11 @@ const branchSchema = new mongoose.Schema({
     },
     headOfBranch: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Faculty"
+        ref: "User"
     },
     hodMentors : {
         type : mongoose.Schema.Types.ObjectId,
-        ref : "Faculty"
+        ref : "User"
     },
     totalSeats: {
         type: Number,

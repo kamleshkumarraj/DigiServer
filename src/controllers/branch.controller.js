@@ -89,18 +89,17 @@ export const getSingleBranch = asyncErrorHandler(async (req, res, next) => {
 export const assignHOD = asyncErrorHandler(async (req, res, next) => {
     const {branchId} = req.params;
     const {hodId} = req.body;
-
+    console.log(hodId)
     if(!mongoose.isValidObjectId(branchId)) return next(new ErrorHandler("Invalid branch id !",400));
 
     const hod = await User.findById(hodId);
     if(!hod) return next(new ErrorHandler("HOD doesn't exist !",404));
 
-    await Branch.findByIdAndUpdate({headOfBranch : hodId});
+    await Branch.findByIdAndUpdate(branchId, {headOfBranch : hodId});
 
     res.status(200).json({
         success : true,
         message : "HOD assigned successfully !",
-        data : hod
     })
 });
 

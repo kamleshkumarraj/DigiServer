@@ -21,12 +21,13 @@ export const isTutor = asyncErrorHandler((req, res, next) => {
     }
 })
 
-export const isHOD = asyncErrorHandler((req, res, next) => {
-    if(req.faculty.role = 'HOD'){
-        return next()
-    }else{
-        return next(new ErrorHandler("Only HOD can access this resources !",402))
-    }
+export const isHOD = asyncErrorHandler(async (req, res, next) => {
+    const hodId = req.body.hodId;
+    const hod = await User.findById(hodId).populate({
+        path : "rolesId",
+        select : "role"
+    });
+    hod?.rolesId?.role.includes("HOD") ? next() : next(new ErrorHandler("Only HOD can access this resources !", 402));
 })
 
 export const isProfessor = asyncErrorHandler((req, res, next) => {

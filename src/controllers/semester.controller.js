@@ -4,14 +4,14 @@ import { ErrorHandler } from "../errors/errorHandler.js";
 import { Semester } from "../models/semester.model.js";
 
 export const createSemester = asyncErrorHandler(async (req, res, next) => {
-    const {branchId, semesterNumber, totalCredits, startDate, endDate} = req.body;
+    const {branchId, semesterNumber, totalCredits, startDate, endDate, semesterCode} = req.body;
 
     // first we check semester is exists or not in this particular branch.
-    const semester = await Semester.findOne({branchId, semesterNumber});
+    const semester = await Semester.findOne({semesterCode});
 
     if(semester) return next(new ErrorHandler("Semester already exists !",400));
 
-    const newSemester = await Semester.create({branchId, semesterNumber, totalCredits, startDate, endDate});
+    const newSemester = await Semester.create({branchId, semesterNumber, totalCredits, startDate, endDate, semesterCode});
 
     res.status(200).json({
         success : true,

@@ -6,6 +6,11 @@ const semesterSchema = new mongoose.Schema({
         ref: "Branch",
         required: true
     },
+    collageId : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "College",
+        required: true
+    },
     semesterNumber: {
         type: Number,
         required: true,

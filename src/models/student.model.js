@@ -48,11 +48,8 @@ const studentSchema = new mongoose.Schema({
         min : [1, "Section must be more than 0 characters"]
     },
     batch : {
-        type : String,
-        required : [true, "Batch is required"],
-        trim : true,
-        max : [2, "Batch must be less than 3 characters"],
-        min : [1, "Batch must be more than 0 characters"]
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Batch"
     },
     
 },{timestamps : true})

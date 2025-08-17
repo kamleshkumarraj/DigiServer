@@ -1,4 +1,6 @@
 import { asyncErrorHandler } from "../errors/asynError.js";
+import { ErrorHandler } from "../errors/errorHandler.js";
+import { Batch } from "../models/batch.models.js";
 
 export const registerBatch = asyncErrorHandler(async (req, res, next) => {
     const { batchName, classRoomId } = req.body;

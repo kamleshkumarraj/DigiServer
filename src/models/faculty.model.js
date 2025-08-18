@@ -18,7 +18,7 @@ const facultySchema = new mongoose.Schema({
     role : {
         type : [String],
         required : [true, "Role is required"],
-        enum : ["HOD", "HODMentor", "Professor", "Tutor", "Admin"]
+        enum : ["HOD", "HOD Mentor", "Professor", "Tutor", "Admin", "faculty"]
     },
     employeeId : {
         type : String,

@@ -1,7 +1,7 @@
 [
   {
-    "email": "rohit.22jics063@jietjodhpur.ac.in",
-    "username": "rohit1234@",
+    "email": "rohit.22jics500@jietjodhpur.ac.in",
+    "username": "rohit1234591@",
     "password": "Rohit86035@#",
     "role": "faculty",
     "profile": {
@@ -12,12 +12,13 @@
       "branchId": "68a07dc4f82415f80e7c4e9a",
       "semester": "68a07fe7d5fb48f1b0b50ea9",
       "role": ["HOD", "faculty"],
-      "isActive": "true"
+      "isActive": "true",
+      "employeeId" : "EMP01"
     }
   },
   {
-    "email": "priya.22jics064@jietjodhpur.ac.in",
-    "username": "priya1234@",
+    "email": "priya.22jics501@jietjodhpur.ac.in",
+    "username": "priya1234592@",
     "password": "Priya86036@#",
     "role": "faculty",
     "profile": {
@@ -28,12 +29,13 @@
       "branchId": "68a07dc4f82415f80e7c4e9a",
       "semester": "68a07fe7d5fb48f1b0b50ea9",
       "role": ["HOD Mentor", "faculty"],
-      "isActive": "true"
+      "isActive": "true",
+      "employeeId" : "EMP02"
     }
   },
   {
-    "email": "ankit.22jics065@jietjodhpur.ac.in",
-    "username": "ankit1234@",
+    "email": "ankit.22jics502@jietjodhpur.ac.in",
+    "username": "ankit1234593@",
     "password": "Ankit86037@#",
     "role": "faculty",
     "profile": {
@@ -44,12 +46,13 @@
       "branchId": "68a07dc4f82415f80e7c4e9a",
       "semester": "68a07fe7d5fb48f1b0b50ea9",
       "role": ["Tutor", "faculty"],
-      "isActive": "true"
+      "isActive": "true",
+      "employeeId" : "EMP03"
     }
   },
   {
-    "email": "neha.22jics066@jietjodhpur.ac.in",
-    "username": "neha1234@",
+    "email": "neha.22jics503@jietjodhpur.ac.in",
+    "username": "neha1234594@",
     "password": "Neha86038@#",
     "role": "faculty",
     "profile": {
@@ -60,12 +63,13 @@
       "branchId": "68a07dc4f82415f80e7c4e9a",
       "semester": "68a07fe7d5fb48f1b0b50ea9",
       "role": ["Tutor", "faculty"],
-      "isActive": "true"
+      "isActive": "true",
+      "employeeId" : "EMP04"
     }
   },
   {
-    "email": "sachin.22jics067@jietjodhpur.ac.in",
-    "username": "sachin1234@",
+    "email": "sachin.22jics505@jietjodhpur.ac.in",
+    "username": "sachin1234595@",
     "password": "Sachin86039@#",
     "role": "faculty",
     "profile": {
@@ -76,12 +80,13 @@
       "branchId": "68a07dc4f82415f80e7c4e9a",
       "semester": "68a07fe7d5fb48f1b0b50ea9",
       "role": ["Tutor", "faculty"],
-      "isActive": "true"
+      "isActive": "true",
+      "employeeId" : "EMP05"
     }
   },
   {
-    "email": "kavita.22jics068@jietjodhpur.ac.in",
-    "username": "kavita1234@",
+    "email": "kavita.22jics506@jietjodhpur.ac.in",
+    "username": "kavita1234596@",
     "password": "Kavita86040@#",
     "role": "faculty",
     "profile": {
@@ -92,12 +97,13 @@
       "branchId": "68a07dc4f82415f80e7c4e9a",
       "semester": "68a07fe7d5fb48f1b0b50ea9",
       "role": "faculty",
-      "isActive": "true"
+      "isActive": "true",
+      "employeeId" : "EMP06"
     }
   },
   {
-    "email": "deepak.22jics069@jietjodhpur.ac.in",
-    "username": "deepak1234@",
+    "email": "deepak.22jics507@jietjodhpur.ac.in",
+    "username": "deepak1234597@",
     "password": "Deepak86041@#",
     "role": "faculty",
     "profile": {
@@ -108,12 +114,13 @@
       "branchId": "68a07dc4f82415f80e7c4e9a",
       "semester": "68a07fe7d5fb48f1b0b50ea9",
       "role": "faculty",
-      "isActive": "true"
+      "isActive": "true",
+      "employeeId" : "EMP07"
     }
   },
   {
-    "email": "pooja.22jics070@jietjodhpur.ac.in",
-    "username": "pooja1234@",
+    "email": "pooja.22jics508@jietjodhpur.ac.in",
+    "username": "pooja1234598@",
     "password": "Pooja86042@#",
     "role": "faculty",
     "profile": {
@@ -124,12 +131,13 @@
       "branchId": "68a07dc4f82415f80e7c4e9a",
       "semester": "68a07fe7d5fb48f1b0b50ea9",
       "role": "faculty",
-      "isActive": "true"
+      "isActive": "true",
+      "employeeId" : "EMP08"
     }
   },
   {
-    "email": "alok.22jics071@jietjodhpur.ac.in",
-    "username": "alok1234@",
+    "email": "alok.22jics509@jietjodhpur.ac.in",
+    "username": "alok1234599@",
     "password": "Alok86043@#",
     "role": "faculty",
     "profile": {
@@ -140,12 +148,13 @@
       "branchId": "68a07dc4f82415f80e7c4e9a",
       "semester": "68a07fe7d5fb48f1b0b50ea9",
       "role": "faculty",
-      "isActive": "true"
+      "isActive": "true",
+      "employeeId" : "EMP09"
     }
   },
   {
-    "email": "anjali.22jics072@jietjodhpur.ac.in",
-    "username": "anjali1234@",
+    "email": "anjali.22jics510@jietjodhpur.ac.in",
+    "username": "anjali1234511@",
     "password": "Anjali86044@#",
     "role": "faculty",
     "profile": {
@@ -156,13 +165,14 @@
       "branchId": "68a07dc4f82415f80e7c4e9a",
       "semester": "68a07fe7d5fb48f1b0b50ea9",
       "role": "faculty",
-      "isActive": "true"
+      "isActive": "true",
+      "employeeId" : "EMP10"
     }
   },
   
   {
-    "email": "rohit.22jics063@jietjodhpur.ac.in",
-    "username": "rohit1234@",
+    "email": "rohit.22jics511@jietjodhpur.ac.in",
+    "username": "rohit1234512@",
     "password": "Rohit86035@#",
     "role": "faculty",
     "profile": {
@@ -173,12 +183,13 @@
       "branchId": "684e82f1863c37b1de548880",
       "semester": "68500b9ce803160b8e0374f6",
       "role": "faculty",
-      "isActive": "true"
+      "isActive": "true",
+      "employeeId" : "EMP11"
     }
   },
   {
-    "email": "priya.22jics064@jietjodhpur.ac.in",
-    "username": "priya1234@",
+    "email": "priya.22jics512@jietjodhpur.ac.in",
+    "username": "priya1234513@",
     "password": "Priya86036@#",
     "role": "faculty",
     "profile": {
@@ -189,12 +200,13 @@
       "branchId": "684e82f1863c37b1de548880",
       "semester": "68500b9ce803160b8e0374f6",
       "role": "faculty",
-      "isActive": "true"
+      "isActive": "true",
+      "employeeId" : "EMP12"
     }
   },
   {
-    "email": "ankit.22jics065@jietjodhpur.ac.in",
-    "username": "ankit1234@",
+    "email": "ankit.22jics513@jietjodhpur.ac.in",
+    "username": "ankit1234514@",
     "password": "Ankit86037@#",
     "role": "faculty",
     "profile": {
@@ -205,12 +217,13 @@
       "branchId": "684e82f1863c37b1de548880",
       "semester": "68500b9ce803160b8e0374f6",
       "role": "faculty",
-      "isActive": "true"
+      "isActive": "true",
+      "employeeId" : "EMP13"
     }
   },
   {
-    "email": "neha.22jics066@jietjodhpur.ac.in",
-    "username": "neha1234@",
+    "email": "neha.22jics514@jietjodhpur.ac.in",
+    "username": "neha1234515@",
     "password": "Neha86038@#",
     "role": "faculty",
     "profile": {
@@ -221,12 +234,13 @@
       "branchId": "684e82f1863c37b1de548880",
       "semester": "68500b9ce803160b8e0374f6",
       "role": "faculty",
-      "isActive": "true"
+      "isActive": "true",
+      "employeeId" : "EMP14"
     }
   },
   {
-    "email": "sachin.22jics067@jietjodhpur.ac.in",
-    "username": "sachin1234@",
+    "email": "sachin.22jics515@jietjodhpur.ac.in",
+    "username": "sachin1234516@",
     "password": "Sachin86039@#",
     "role": "faculty",
     "profile": {
@@ -237,12 +251,13 @@
       "branchId": "684e82f1863c37b1de548880",
       "semester": "68500b9ce803160b8e0374f6",
       "role": "faculty",
-      "isActive": "true"
+      "isActive": "true",
+      "employeeId" : "EMP15"
     }
   },
   {
-    "email": "kavita.22jics068@jietjodhpur.ac.in",
-    "username": "kavita1234@",
+    "email": "kavita.22jics516@jietjodhpur.ac.in",
+    "username": "kavita1234517@",
     "password": "Kavita86040@#",
     "role": "faculty",
     "profile": {
@@ -253,12 +268,13 @@
       "branchId": "684e82f1863c37b1de548880",
       "semester": "68500b9ce803160b8e0374f6",
       "role": "faculty",
-      "isActive": "true"
+      "isActive": "true",
+      "employeeId" : "EMP16"
     }
   },
   {
-    "email": "deepak.22jics069@jietjodhpur.ac.in",
-    "username": "deepak1234@",
+    "email": "deepak.22jics517@jietjodhpur.ac.in",
+    "username": "deepak1234518@",
     "password": "Deepak86041@#",
     "role": "faculty",
     "profile": {
@@ -269,12 +285,13 @@
       "branchId": "684e82f1863c37b1de548880",
       "semester": "68500b9ce803160b8e0374f6",
       "role": "faculty",
-      "isActive": "true"
+      "isActive": "true",
+      "employeeId" : "EMP17"
     }
   },
   {
-    "email": "pooja.22jics070@jietjodhpur.ac.in",
-    "username": "pooja1234@",
+    "email": "pooja.22jics518@jietjodhpur.ac.in",
+    "username": "pooja1234519@",
     "password": "Pooja86042@#",
     "role": "faculty",
     "profile": {
@@ -285,12 +302,13 @@
       "branchId": "684e82f1863c37b1de548880",
       "semester": "68500b9ce803160b8e0374f6",
       "role": "faculty",
-      "isActive": "true"
+      "isActive": "true",
+      "employeeId" : "EMP18"
     }
   },
   {
-    "email": "alok.22jics071@jietjodhpur.ac.in",
-    "username": "alok1234@",
+    "email": "alok.22jics519@jietjodhpur.ac.in",
+    "username": "alok1234520@",
     "password": "Alok86043@#",
     "role": "faculty",
     "profile": {
@@ -301,12 +319,13 @@
       "branchId": "684e82f1863c37b1de548880",
       "semester": "68500b9ce803160b8e0374f6",
       "role": "faculty",
-      "isActive": "true"
+      "isActive": "true",
+      "employeeId" : "EMP19"
     }
   },
   {
-    "email": "anjali.22jics072@jietjodhpur.ac.in",
-    "username": "anjali1234@",
+    "email": "anjali.22jics520@jietjodhpur.ac.in",
+    "username": "anjali1234521@",
     "password": "Anjali86044@#",
     "role": "faculty",
     "profile": {
@@ -317,7 +336,8 @@
       "branchId": "684e82f1863c37b1de548880",
       "semester": "68500b9ce803160b8e0374f6",
       "role": "faculty",
-      "isActive": "true"
+      "isActive": "true",
+      "employeeId" : "EMP20"
     }
   }
 

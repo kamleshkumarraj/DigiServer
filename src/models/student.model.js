@@ -51,6 +51,28 @@ const studentSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : "Batch"
     },
+    rollNumber : {
+        type : Number,
+        required : [true, "Roll number is required"],
+        unique : true,
+        trim : true,
+    },
+    dateOfBirth : {
+        type : Date,
+        required : [true, "Date of birth is required"]
+    },
+    contactInfo : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "ContactInfo"
+    },
+    phoneNumber : {
+        type : String,
+        required : [true, "Phone number is required"],
+        unique : true,
+        trim : true,
+        max : [10, "Phone number must be less than 15 characters"],
+        min : [10, "Phone number must be more than 9 characters"]
+    },
     
 },{timestamps : true})
 

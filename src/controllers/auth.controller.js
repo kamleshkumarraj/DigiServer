@@ -13,55 +13,55 @@ import { loginWithJWT } from "../utils/loginUsingJwt.utils.js";
 // controller for register student or faculty.
 export const register = asyncErrorHandler(async (req, res, next) => {
   // await User.create(req.body);
-  const data = req.body || [];
-  const profileArray = data.map(user => user?.profile);
-  // now we create userProfile. 
-  const profile = await Faculty.create(profileArray);
-  const IdArray = profile.map(user => user._id);
+  // const data = req.body || [];
+  // const profileArray = data.map(user => user?.profile);
+  // // now we create userProfile. 
+  // const profile = await Faculty.create(profileArray);
+  // const IdArray = profile.map(user => user._id);
 
-  const userData = data.map(({email, username, password, role}) => ({username, password,email, role, rolesId : IdArray.shift()}));
+  // const userData = data.map(({email, username, password, role}) => ({username, password,email, role, rolesId : IdArray.shift()}));
 
-  await User.create(userData)
+  // await User.create(userData)
+  const { email, username, password, role, profile } = req.body;
+  const avatar = req.file;
 
-  // const avatar = req.file;
+  // first we check if user is already registered or not.
+  const existingUser = await User.findOne({$or: [{ email }, { username }] });
 
-  // // first we check if user is already registered or not.
-  // const existingUser = await User.findOne({$or: [{ email }, { username }] });
+  if (existingUser) return next(new ErrorHandler("User already registered !", 400));
 
-  // if (existingUser) return next(new ErrorHandler("User already registered !", 400));
+  let userModel;
+  if(role == 'student') userModel = Student;
+  else if(role == 'faculty') userModel = Faculty;
+  else return next(new ErrorHandler("Invalid role !", 400));
 
-  // let userModel;
-  // if(role == 'student') userModel = Student;
-  // else if(role == 'faculty') userModel = Faculty;
-  // else return next(new ErrorHandler("Invalid role !", 400));
+  const userProfile = await userModel.create(JSON.parse(profile));
 
-  // const userProfile = await userModel.create(JSON.parse(profile));
+  if (!avatar) return next(new ErrorHandler("Avatar is required !", 400));
 
-  // if (!avatar) return next(new ErrorHandler("Avatar is required !", 400));
-
-  // //upload avatar on cloudinary.
-  // const { success, results } = await uploadMultipleFilesOnCloudinary([avatar]);
+  //upload avatar on cloudinary.
+  const { success, results } = await uploadMultipleFilesOnCloudinary([avatar]);
   
-  // if (!success) return next(new ErrorHandler(results, 400));
+  if (!success) return next(new ErrorHandler(results, 400));
 
-  // const public_id = results[0].public_id;
-  // const url = results[0].url;
+  const public_id = results[0].public_id;
+  const url = results[0].url;
 
-  // await removeFile([avatar]);
+  await removeFile([avatar]);
 
-  //  // now we create user.
-  // await User.create({
-  //   email,
-  //   username,
-  //   password,
-  //   role,
-  //   rolesId : userProfile?._id,
-  //   avatar : {
-  //     public_id,
-  //     url,
-  //   }
+   // now we create user.
+  await User.create({
+    email,
+    username,
+    password,
+    role,
+    rolesId : userProfile?._id,
+    avatar : {
+      public_id,
+      url,
+    }
 
-  // })
+  })
 
   res.status(200).json({
     success: true,

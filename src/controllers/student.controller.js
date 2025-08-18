@@ -78,8 +78,13 @@ export const getMyProfile = asyncErrorHandler(async (req, res, next) => {
           },
           {$unwind : "$batch"},
           {
+            $addFields : {
+              fullName: { $concat: ["$firstName", " ", "$lastName"] },
+            }
+          },
+          {
             $project : {
-              fullName : firstName + " " + lastName,
+              fullName : 1,
               rollNumber : 1,
               dateOfBirth : 1,
               phoneNumber : 1,

@@ -73,6 +73,11 @@ const studentSchema = new mongoose.Schema({
         max : [10, "Phone number must be less than 15 characters"],
         min : [10, "Phone number must be more than 9 characters"]
     },
+    gender : {
+        type : String,
+        required : [true, "Gender is required"],
+        enum : ['male', 'female', 'custom']
+    }
     
 },{timestamps : true})
 

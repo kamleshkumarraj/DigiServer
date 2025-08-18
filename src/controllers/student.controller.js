@@ -45,159 +45,69 @@ export const deleteProfile = asyncErrorHandler(async (req, res, next) => {
 });
 
 // code for fetching complete student profile.
-export const getMyProfile = asyncErrorHandler(async (req, res, next) => {
-  const [result] = await User.aggregate([
-    {
-      $match: {
-        _id: new mongoose.Types.ObjectId(req?.user?._id),
-      },
-    },
-    {
-      $facet: {
-        student: [
-          { $match: { role: "student" } },
-          {
-            $lookup: {
-              from: "students",
-              localField: "rolesId",
-              foreignField: "_id",
-              as: "student",
-              pipeline: [
-                {
-                  $lookup: {
-                    from: "collages",
-                    localField: "collage",
-                    foreignField: "_id",
-                    as: "collage",
-                    pipeline: [
-                      {
-                        $project: {
-                          collageName: 1,
-                          image: 1,
-                          _id: 0,
-                        },
-                      },
-                    ],
-                  },
-                },
-                {
-                  $lookup: {
-                    from: "universities",
-                    localField: "university",
-                    foreignField: "_id",
-                    as: "university",
-                    pipeline: [
-                      {
-                        $project: {
-                          name: 1,
-                          image: 1,
-                          _id: 0,
-                        },
-                      },
-                    ],
-                  },
-                },
-                {
-                  $lookup: {
-                    from: "branches",
-                    localField: "branch",
-                    foreignField: "_id",
-                    as: "branch",
-                    pipeline: [
-                      {
-                        $project: {
-                          branchName: 1,
-                          branchCode: 1,
-                          hodMentors: 1,
-                          headOfBranch: 1,
-                          _id: 0,
-                        },
-                      },
-                    ],
-                  },
-                },
-                {
-                  $lookup: {
-                    from: "semesters",
-                    localField: "semester",
-                    foreignField: "_id",
-                    as: "semester",
-                    pipeline: [
-                      {
-                        $project: {
-                          semesterNumber: 1,
-                          totalCredits: 1,
-                          startDate: 1,
-                          endDate: 1,
-                        },
-                      },
-                    ],
-                  },
-                },
-                {
-                  $lookup: {
-                    from: "classrooms",
-                    localField: "classroom",
-                    foreignField: "_id",
-                    as: "classroom",
-                    pipeline: [
-                      {
-                        $project: {
-                          classroomName: 1,
-                          topics: 1,
-                          _id: 0,
-                        },
-                      },
-                    ],
-                  },
-                },
-                { $unwind: "$collage" },
-                { $unwind: "$university" },
-                { $unwind: "$branch" },
-                { $unwind: "$semester" },
-                { $unwind: "$classroom" },
-                {
-                  $project: {
-                    firstName: 1,
-                    lastName: 1,
-                    collage: 1,
-                    university: 1,
-                    branch: 1,
-                    semester: 1,
-                    classroom: 1,
-                  },
-                },
-              ],
-            },
-          },
-          {
-            $project: {
-              email: 1,
-              username: 1,
-              avatar: 1,
-              student: 1,
-            },
-          },
-        ],
-      },
-    },
-    {
-      $project: {
-        profile: { $arrayElemAt: ["$student", 0] },
-        username : 1,
-        email : 1,
-        avatar : 1
-      },
-    },
-  ]);
 
-  if (!result?.profile)
-    return next(new ErrorHandler("Profile not found!", 404));
+export const getMyProfile = asyncErrorHandler(async (req, res, next) => {
+  const userId = req.user;
+
+  const [studentProfile] = await User.aggregate([
+    {
+      $match : {_id : new mongoose.Types.ObjectId(userId)}
+    },
+    {
+      $lookup : {
+        from : "students",
+        localField : "rolesId",
+        foreignField : "_id",
+        as : "studentProfile",
+        pipeline: [
+          {
+            $lookup : {
+              from : 'batches',
+              localField : "batch",
+              foreignField : "_id",
+              as : "batch",
+              pipeline : [
+                {
+                  $project : {
+                    batchName : 1,
+                    _id : 0
+                  }
+                }
+              ]
+            }
+          },
+          {$unwind : "$batch"},
+          {
+            $project : {
+              fullName : firstName + " " + lastName,
+              rollNumber : 1,
+              dateOfBirth : 1,
+              phoneNumber : 1,
+              contactInfo : 1,
+              gender : 1,
+              section : 1,
+              batch : 1,
+            }
+          }
+        ]
+      }
+    },
+    {$unwind : "$studentProfile"},
+    {$project : {
+      email : 1,
+      username : 1,
+      role : 1,
+      studentProfile : 1,
+      avatar : 1
+    }}
+  ])
+
+  if(!studentProfile) return next(new ErrorHandler("Profile not found !", 404));
 
   res.status(200).json({
-    success: true,
-    message: "Profile fetched successfully!",
-    data: result.profile,
-  });
-});
+    success : true,
+    message : "Profile fetched successfully !",
+    data : studentProfile
+  })
 
+})

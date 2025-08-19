@@ -98,7 +98,8 @@ export const getFacultyProfile = asyncErrorHandler(async (req, res, next) => {
                             phoneNumber : 1,
                             joiningDate : 1,
                             role : 1,
-                            gender : 1
+                            gender : 1,
+                            isActive : 1
                         }
                     }
                 ]

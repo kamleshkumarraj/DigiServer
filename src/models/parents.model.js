@@ -57,7 +57,6 @@ const parentSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : "University"
     }
-
 })
 
-export const Parent = mongoose.model("Parent", parentSchema);
+export const Parent = mongoose.model("parent", parentSchema);

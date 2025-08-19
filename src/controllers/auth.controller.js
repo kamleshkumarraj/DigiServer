@@ -9,6 +9,7 @@ import { Faculty } from "../models/faculty.model.js";
 import { Student } from "../models/student.model.js";
 import { User } from "../models/users.model.js";
 import { loginWithJWT } from "../utils/loginUsingJwt.utils.js";
+import { Parent } from "../models/parents.model.js";
 
 // controller for register student or faculty.
 export const register = asyncErrorHandler(async (req, res, next) => {
@@ -33,6 +34,7 @@ export const register = asyncErrorHandler(async (req, res, next) => {
   let userModel;
   if(role == 'student') userModel = Student;
   else if(role == 'faculty') userModel = Faculty;
+  else if(role == 'parent') userModel = Parent; // Assuming Parent model exists
   else return next(new ErrorHandler("Invalid role !", 400));
 
   const userProfile = await userModel.create(JSON.parse(profile));
@@ -65,7 +67,7 @@ export const register = asyncErrorHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    message: `Student registered successfully !`,
+    message: `${role} registered successfully !`,
   });
 
 });

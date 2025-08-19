@@ -56,7 +56,22 @@ const parentSchema = new mongoose.Schema({
     universityId : { 
         type : mongoose.Schema.Types.ObjectId,
         ref : "University"
+    },
+    occupation : {
+        type : String,
+        required : [true, "Occupation is required"],
+        trim : true,
+        max : [50 , "Occupation must be less than 50 characters"],
+        min : [3, "Occupation must be more than 3 characters"]
+    },
+    relationship : {
+        type : String,
+        required : [true, "Relationship is required"],
+        trim : true,
+        max : [50 , "Relationship must be less than 50 characters"],
+        min : [3, "Relationship must be more than 3 characters"]
     }
-})
+
+},{timestamps : true})
 
 export const Parent = mongoose.model("parent", parentSchema);

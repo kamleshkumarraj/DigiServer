@@ -34,6 +34,8 @@ export const getParentProfile = asyncErrorHandler(async (req, res, next) => {
               bio: 1,
               age: 1,
               child: 1,
+              occupation: 1,
+              relationship: 1,
             },
           },
         ],

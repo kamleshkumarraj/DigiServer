@@ -49,6 +49,35 @@ const facultySchema = new mongoose.Schema({
         type : Boolean,
         default : true
     },
+    specialization : {
+        type : String,
+        required : [true, "Specialization is required"],
+        trim : true,
+        max : [50 , "Specialization must be less than 50 characters"],
+        min : [3, "Specialization must be more than 3 characters"]
+    },
+    phoneNumber : {
+        type : String,
+        required : [true, "Phone number is required"],
+        trim : true,
+        max : [10, "Phone number must be less than 15 characters"],
+        min : [10, "Phone number must be more than 9 characters"]
+    },
+    bio : {
+        type : String,
+        required : [true, "Bio is required"],
+        trim : true,
+        max : [500 , "Bio must be less than 500 characters"],
+        min : [3, "Bio must be more than 3 characters"]
+    },
+    contactDetails :{ 
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Contact"
+    },
+    professionalDetails : {
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Professional"
+    }
 
 }, {timestamps : true});
 

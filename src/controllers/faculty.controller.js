@@ -1,6 +1,7 @@
 import { asyncErrorHandler } from "../errors/asynError.js";
 import { ErrorHandler } from "../errors/errorHandler.js";
 import { Faculty } from "../models/faculty.model.js";
+import { User } from "../models/users.model.js";
 
 
 
@@ -67,55 +68,34 @@ export const addBranchFaculty = asyncErrorHandler(async (req, res, next) => {
 })
 // now we write controller for get the faculty profile.
 export const getMyProfileFaculty = asyncErrorHandler(async (req, res, next) => {
-    const [faculty] = await Faculty.aggregate([
+    const id = req.user;
+
+    const [faculty] = await User.aggregate([
         {
-            $match : {_id : req.faculty}
-        },
-        {
-            $lookup: {
-                from: "colleges",
-                localField: "collageId",
-                foreignField: "_id",
-                as: "collage"
+            $match : {
+                _id : mongoose.Types.ObjectId(id)
             }
         },
         {
             $lookup : {
-                from : 'universities',
-                localField : 'university',
-                foreignField : '_id',
-                as : 'university',
+                from : "faculties",
+                localField : "rolesId",
+                foreignField : "_id",
+                as : "profile",
                 pipeline : [
                     {
+                        $addFields : {
+                            fullName : "$firstName + ' ' + $lastName"
+                        }
+                    },
+                    {
                         $project : {
-                            name : 1,
-                            image : 1,
-                            _id : 0
+                            fullName : 1,
+                            employeeId : 1,
+                            
                         }
                     }
                 ]
-            }
-        },
-        {
-            $unwind: '$collage'
-        },
-        {
-            $unwind: '$university'
-        },
-        {
-            $project: {
-                firstName: 1,
-                lastName: 1,
-                email: 1,
-                username: 1,
-                collageId: 1,
-                branchId: 1,
-                semester: 1,
-                employeeId: 1,
-                role: 1,
-                avatar: 1,
-                collage : 1,
-                university : 1
             }
         }
     ])

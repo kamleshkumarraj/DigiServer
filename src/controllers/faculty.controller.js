@@ -95,7 +95,10 @@ export const getFacultyProfile = asyncErrorHandler(async (req, res, next) => {
                             employeeId : 1,
                             bio : 1,
                             specialization : 1,
-                            phoneNumber : 1
+                            phoneNumber : 1,
+                            joiningDate : 1,
+                            role : 1,
+                            gender : 1
                         }
                     }
                 ]

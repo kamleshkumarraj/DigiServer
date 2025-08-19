@@ -24,6 +24,7 @@ export const getParentProfile = asyncErrorHandler(async (req, res, next) => {
                             fullName: { $concat: ["$firstName", " ", "$lastName"] },
                         }
                     },
+                    
                     {
                         $project : {
                             fullName : 1,
@@ -52,6 +53,8 @@ export const getParentProfile = asyncErrorHandler(async (req, res, next) => {
             }
         }
     ])
+
+    // now we get children for 
 
     if(!parentProfile) return next(new ErrorHandler("Parent profile not found !", 404));
 

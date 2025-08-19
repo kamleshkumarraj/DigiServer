@@ -86,7 +86,7 @@ export const getFacultyProfile = asyncErrorHandler(async (req, res, next) => {
                 pipeline : [
                     {
                         $addFields : {
-                            fullName : "$firstName + ' ' + $lastName"
+                            fullName : { $concat : ["$firstName", " ", "$lastName"] }
                         }
                     },
                     {

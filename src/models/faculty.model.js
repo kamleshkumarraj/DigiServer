@@ -77,6 +77,16 @@ const facultySchema = new mongoose.Schema({
     professionalDetails : {
         type : mongoose.Schema.Types.ObjectId,
         ref : "Professional"
+    },
+    joiningDate : {
+        type : Date,
+        required : [true, "Joining date is required"],
+        default : Date.now
+    },
+    gender : {
+        type : String,
+        enum : ['Male', 'Female', 'Custom'],
+        required  : true
     }
 
 }, {timestamps : true});

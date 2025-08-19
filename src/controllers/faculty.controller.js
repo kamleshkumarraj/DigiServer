@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { asyncErrorHandler } from "../errors/asynError.js";
 import { ErrorHandler } from "../errors/errorHandler.js";
 import { Faculty } from "../models/faculty.model.js";
@@ -73,7 +74,7 @@ export const getFacultyProfile = asyncErrorHandler(async (req, res, next) => {
     const [faculty] = await User.aggregate([
         {
             $match : {
-                _id : mongoose.Types.ObjectId(id)
+                _id : new mongoose.Types.ObjectId(id)
             }
         },
         {

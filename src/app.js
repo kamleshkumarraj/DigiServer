@@ -13,6 +13,7 @@ import { facultyRouters } from "./routes/faculty.routes.js";
 import { syllabusRouter } from "./routes/syllabus.routes.js";
 import { authRouter } from "./routes/auth.routes.js";
 import { batchRouter } from "./routes/batch.routes.js";
+import { parentRouter } from "./routes/parent.routes.js";
 
 export const app = express();
 
@@ -80,6 +81,9 @@ app.use("/api/v1/syllabus", syllabusRouter);
 
 //now we configure batch routes.
 app.use("/api/v1/batch", batchRouter);
+
+//now we configure parent routes.
+app.use("/api/v1/parent", parentRouter);
 
 app.use((err, req, res, next) => {
   console.log(err.stack)

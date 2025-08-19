@@ -67,7 +67,7 @@ export const addBranchFaculty = asyncErrorHandler(async (req, res, next) => {
     })
 })
 // now we write controller for get the faculty profile.
-export const getMyProfileFaculty = asyncErrorHandler(async (req, res, next) => {
+export const getFacultyProfile = asyncErrorHandler(async (req, res, next) => {
     const id = req.user;
 
     const [faculty] = await User.aggregate([
@@ -92,10 +92,24 @@ export const getMyProfileFaculty = asyncErrorHandler(async (req, res, next) => {
                         $project : {
                             fullName : 1,
                             employeeId : 1,
-                            
+                            bio : 1,
+                            specialization : 1,
+                            phoneNumber : 1
                         }
                     }
                 ]
+            }
+        },
+        {
+            $unwind : "$profile"
+        },
+        {
+            $project : {
+                email : 1,
+                username : 1,
+                profile : 1,
+                avatar : 1,
+                role : 1
             }
         }
     ])

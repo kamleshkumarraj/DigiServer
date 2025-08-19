@@ -37,6 +37,13 @@ export const isFaculty = asyncErrorHandler(async (req, res, next) => {
     else next(new ErrorHandler("Only Faculty can access this resources !", 402));
 })
 
+export const isParent = asyncErrorHandler(async (req, res, next) => {
+    const id = req.user;
+    const parent = await User.findById(id);
+    if(parent?.role == 'parent') next();
+    else next(new ErrorHandler("Only Parent can access this resources !", 402));
+})
+
 export const isProfessor = asyncErrorHandler((req, res, next) => {
     if(req.user.role = 'Professor'){
         return next()

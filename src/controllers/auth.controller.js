@@ -74,11 +74,14 @@ export const register = asyncErrorHandler(async (req, res, next) => {
 
 // now we write controller for login student.
 export const login = asyncErrorHandler(async (req, res, next) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, role } = req.body;
   // first we check student is registered or not.
   const user = await User.findOne({
     $or: [{ email: email }, { username: username }],
   }).select("+password");
+
+  if(user?.role !== role) return next(new ErrorHandler("Invalid credentials !", 400));
+
 
   // console.log(student);
 

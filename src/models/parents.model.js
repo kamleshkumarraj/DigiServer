@@ -66,7 +66,14 @@ const parentSchema = new mongoose.Schema({
         trim : true,
         max : [50 , "Relationship must be less than 50 characters"],
         min : [3, "Relationship must be more than 3 characters"]
-    }
+    },
+    language : [{
+        type : String,
+        required : [true, "Language is required"],
+        trim : true,
+        max : [50 , "Language must be less than 50 characters"],
+        min : [3, "Language must be more than 3 characters"]
+    }]
 
 },{timestamps : true})
 

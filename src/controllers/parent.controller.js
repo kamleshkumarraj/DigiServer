@@ -36,6 +36,7 @@ export const getParentProfile = asyncErrorHandler(async (req, res, next) => {
               child: 1,
               occupation: 1,
               relationship: 1,
+              language : 1
             },
           },
         ],

@@ -70,10 +70,6 @@ const facultySchema = new mongoose.Schema({
         max : [500 , "Bio must be less than 500 characters"],
         min : [3, "Bio must be more than 3 characters"]
     },
-    contactDetails :{ 
-        type : mongoose.Schema.Types.ObjectId,
-        ref : "Contact"
-    },
     professionalDetails : {
         type : mongoose.Schema.Types.ObjectId,
         ref : "Professional"

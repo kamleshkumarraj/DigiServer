@@ -64,4 +64,4 @@ const contactSchema = new mongoose.Schema({
     }
 })
 
-export const ContactInfo = mongoose.model("ContactInfo", contactSchema);
+export const ContactInfo = mongoose.model("Contact", contactSchema);

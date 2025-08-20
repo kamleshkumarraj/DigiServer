@@ -27,10 +27,6 @@ const parentSchema = new mongoose.Schema({
         required : [true, "Gender is required"],
         enum : ['male', 'female', 'custom']
     },
-    contactDetails : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : "Contact"
-    },
     age : {
         type : Number,
         required : [true, "Age is required"],

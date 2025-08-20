@@ -61,10 +61,6 @@ const studentSchema = new mongoose.Schema({
         type : Date,
         required : [true, "Date of birth is required"]
     },
-    contactInfo : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : "ContactInfo"
-    },
     phoneNumber : {
         type : String,
         required : [true, "Phone number is required"],

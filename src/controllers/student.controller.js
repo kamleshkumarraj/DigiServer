@@ -97,7 +97,30 @@ export const getMyProfile = asyncErrorHandler(async (req, res, next) => {
         ]
       }
     },
+    {
+      $lookup : { 
+        from : "contacts",
+        localField : "_id",
+        foreignField : "userId",
+        as : "contactInfo",
+        pipeline : [
+          {
+            $project : {
+              address : 1,
+              state : 1,
+              country : 1,
+              zipCode : 1,
+              parentPhoneNumber : 1,
+              emergencyContact : 1,
+              city : 1,
+              district : 1
+            }
+          }
+        ]
+      }
+    },
     {$unwind : "$studentProfile"},
+    {$unwind : "$contactInfo"},
     {$project : {
       email : 1,
       username : 1,

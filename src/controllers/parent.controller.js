@@ -42,7 +42,32 @@ export const getParentProfile = asyncErrorHandler(async (req, res, next) => {
       },
     },
     {
+      $lookup : { 
+        from : "contacts",
+        localField : "_id",
+        foreignField : "userId",
+        as : "contactInfo",
+        pipeline : [
+          {
+            $project : {
+              address : 1,
+              state : 1,
+              country : 1,
+              zipCode : 1,
+              parentPhoneNumber : 1,
+              emergencyContact : 1,
+              city : 1,
+              district : 1
+            }
+          }
+        ]
+      }
+    },
+    {
       $unwind: "$parentProfile",
+    },
+    {
+      $unwind: "$contactInfo",
     },
     {
       $project: {
@@ -51,6 +76,7 @@ export const getParentProfile = asyncErrorHandler(async (req, res, next) => {
         role: 1,
         parentProfile: 1,
         avatar: 1,
+        contactInfo: 1,
       },
     },
   ]);

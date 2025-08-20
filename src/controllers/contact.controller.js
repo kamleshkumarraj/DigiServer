@@ -17,6 +17,11 @@ export const updateContact = asyncErrorHandler(async (req, res, next) => {
     const id = req.params.id;
     const data = req.body;
 
+    const contactInfo = await ContactInfo.findById(id);
+    if(contactInfo?.userId?.toString() !== req?.user?.toString()) {
+        return next(new ErrorHandler("You are not authorized to update this contact info !", 403));
+    }
+
     await ContactInfo.findByIdAndUpdate(id, data, {runValidators : true});
 
     res.status(200).json({
@@ -27,7 +32,11 @@ export const updateContact = asyncErrorHandler(async (req, res, next) => {
 
 export const deleteContact = asyncErrorHandler(async (req, res, next) => {
     const id = req.params.id;
-
+    const contactInfo = await ContactInfo.findById(id);
+    if(contactInfo?.userId?.toString() !== req?.user?.toString()) {
+        return next(new ErrorHandler("You are not authorized to update this contact info !", 403));
+    }
+    
     await ContactInfo.findByIdAndDelete(id);
     res.status(200).json({
         status : "success",

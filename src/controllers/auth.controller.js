@@ -149,3 +149,10 @@ export const updateAvatar = asyncErrorHandler(async (req, res, next) => {
 
 // now we write controller for updating the profile.
 
+export const directLogin = asyncErrorHandler(async (req, res, next) => {
+  res.status(200).json({
+    success: true,
+    message: "User logged in successfully.",
+    data: req.user,
+  });
+})

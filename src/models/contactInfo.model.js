@@ -8,6 +8,20 @@ const contactSchema = new mongoose.Schema({
         max : [100, "Address must be less than 100 characters"],
         min : [3, "Address must be more than 3 characters"]
     },
+    city : {
+        type : String,
+        required : [true, "City is required"],
+        trim : true,
+        max : [50, "City must be less than 50 characters"],
+        min : [2, "City must be more than 2 characters"]
+    },
+    district : {
+        type : String,
+        required : [true, "District is required"],
+        trim : true,
+        max : [50, "District must be less than 50 characters"],
+        min : [2, "District must be more than 2 characters"]
+    },
     state : {
         type : String,
         required : [true, "State is required"],

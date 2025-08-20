@@ -126,7 +126,8 @@ export const getMyProfile = asyncErrorHandler(async (req, res, next) => {
       username : 1,
       role : 1,
       studentProfile : 1,
-      avatar : 1
+      avatar : 1,
+      contactInfo : 1,
     }}
   ])
 

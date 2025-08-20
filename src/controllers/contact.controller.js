@@ -2,8 +2,8 @@ import { asyncErrorHandler } from "../errors/asynError.js";
 import { ContactInfo } from "../models/contactInfo.model.js";
 
 export const createContact = asyncErrorHandler(async (req, res, next) => {
-    const {address, state, country, zipCode, parentPhoneNumber, emergencyContact, city, district} = req.body;
-    const userId = req.user._id;
+    const {address, state, country, zipCode, parentPhoneNumber, emergencyContact, city, district, userId} = req.body;
+    // const userId = req.user._id;
 
     await ContactInfo.create({address, state, country, zipCode, parentPhoneNumber, emergencyContact, userId, city, district});
 

@@ -30,6 +30,13 @@ export const isHOD = asyncErrorHandler(async (req, res, next) => {
     hod?.rolesId?.role.includes("HOD") ? next() : next(new ErrorHandler("Only HOD can access this resources !", 402));
 })
 
+export const isStudent = asyncErrorHandler(async (req, res, next) => {
+    const id = req.user;
+    const student = await User.findById(id);
+    if(student?.role == 'student') next();
+    else next(new ErrorHandler("Only Student can access this resources !", 402));
+})
+
 export const isFaculty = asyncErrorHandler(async (req, res, next) => {
     const id = req.user;
     const faculty = await User.findById(id);

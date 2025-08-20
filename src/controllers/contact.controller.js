@@ -2,10 +2,10 @@ import { asyncErrorHandler } from "../errors/asynError.js";
 import { ContactInfo } from "../models/contactInfo.model.js";
 
 export const createContact = asyncErrorHandler(async (req, res, next) => {
-    const {address, state, country, zipCode, parentPhoneNumber, emergencyContact} = req.body;
+    const {address, state, country, zipCode, parentPhoneNumber, emergencyContact, city, district} = req.body;
     const userId = req.user._id;
 
-    await ContactInfo.create({address, state, country, zipCode, parentPhoneNumber, emergencyContact, userId});
+    await ContactInfo.create({address, state, country, zipCode, parentPhoneNumber, emergencyContact, userId, city, district});
 
     res.status(201).json({
         status: "success",
@@ -36,7 +36,7 @@ export const deleteContact = asyncErrorHandler(async (req, res, next) => {
     if(contactInfo?.userId?.toString() !== req?.user?.toString()) {
         return next(new ErrorHandler("You are not authorized to update this contact info !", 403));
     }
-    
+
     await ContactInfo.findByIdAndDelete(id);
     res.status(200).json({
         status : "success",

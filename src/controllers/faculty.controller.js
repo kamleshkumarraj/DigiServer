@@ -3,6 +3,7 @@ import { asyncErrorHandler } from "../errors/asynError.js";
 import { ErrorHandler } from "../errors/errorHandler.js";
 import { Faculty } from "../models/faculty.model.js";
 import { User } from "../models/users.model.js";
+import { Semester } from "../models/semester.model.js";
 
 // now we write controller for update the profile of faculty.
 export const updateProfileFaculty = asyncErrorHandler(
@@ -219,5 +220,23 @@ export const getMyBranches = asyncErrorHandler(async (req, res, next) => {
     message: "Branches fetched successfully !",
     data: branches?.branch,
   });
+
+})
+
+// get all semester for faculty according to branch.
+export const getSemesterForBranch = asyncErrorHandler(async (req, res, next) => {
+  const selectedBranch = req.params.branchId;
+  const semesters  = await Semester.find({branchId : selectedBranch}, {semesterNumber : 1, semesterCode : 1});
+
+  if(!semesters || semesters.length === 0) {
+    return next(new ErrorHandler("No semesters found for this branch !", 404));
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "Semesters fetched successfully !",
+    data: semesters,
+  })
+
 
 })

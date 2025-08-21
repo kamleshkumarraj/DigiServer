@@ -176,3 +176,48 @@ export const getFacultyProfile = asyncErrorHandler(async (req, res, next) => {
     data: faculty,
   });
 });
+
+export const getMyBranches = asyncErrorHandler(async (req, res, next) => {
+  const id = req.user;
+
+  const user = await User.findById(id).lean();
+  const rolesId = user?.rolesId;
+
+  const [branches] = await Faculty.aggregate([
+    {$match : {
+      _id : new mongoose.Types.ObjectId(rolesId)
+    }},
+    {
+      $lookup : {
+        from  : "branches",
+        localField : "branchId",
+        foreignField : "_id",
+        as : "branch",
+        pipeline : [
+          {
+            $project :{
+              branchName : 1,
+              branchCode : 1,
+            }
+          }
+        ]
+      }
+    },
+    {
+      $project : {
+        branch : 1
+      }
+    }
+  ])
+
+  if(!branches) {
+    return next(new ErrorHandler("No branches found for this faculty !", 404));
+  }
+
+  res.status(200).json({
+    success: true,
+    message: "Branches fetched successfully !",
+    data: branches?.branch,
+  });
+
+})

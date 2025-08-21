@@ -225,8 +225,13 @@ export const getMyBranches = asyncErrorHandler(async (req, res, next) => {
 
 // get all semester for faculty according to branch.
 export const getSemesterForBranch = asyncErrorHandler(async (req, res, next) => {
+  const facultySem = await User.findById(req.user, ).populate({
+    path : "rolesId",
+    select : "semester"
+  })
+  
   const selectedBranch = req.params.branchId;
-  const semesters  = await Semester.find({branchId : selectedBranch}, {semesterNumber : 1, semesterCode : 1});
+  const semesters  = await Semester.find({branchId : selectedBranch, _id : {$in : facultySem?.rolesId?.semester}}, {semesterNumber : 1, semesterCode : 1});
 
   if(!semesters || semesters.length === 0) {
     return next(new ErrorHandler("No semesters found for this branch !", 404));

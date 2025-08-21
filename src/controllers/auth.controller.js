@@ -150,9 +150,10 @@ export const updateAvatar = asyncErrorHandler(async (req, res, next) => {
 // now we write controller for updating the profile.
 
 export const directLogin = asyncErrorHandler(async (req, res, next) => {
+  const user = await User.findById(req.user,{role : 1, _id : 0}).lean();
   res.status(200).json({
     success: true,
     message: "User logged in successfully.",
-    data: req.user,
+    data: user,
   });
 })

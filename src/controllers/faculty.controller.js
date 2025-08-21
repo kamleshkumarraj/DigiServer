@@ -4,6 +4,7 @@ import { ErrorHandler } from "../errors/errorHandler.js";
 import { Faculty } from "../models/faculty.model.js";
 import { User } from "../models/users.model.js";
 import { Semester } from "../models/semester.model.js";
+import { Classroom } from "../models/classroom.model.js";
 
 // now we write controller for update the profile of faculty.
 export const updateProfileFaculty = asyncErrorHandler(
@@ -229,7 +230,7 @@ export const getSemesterForBranch = asyncErrorHandler(async (req, res, next) => 
     path : "rolesId",
     select : "semester"
   })
-  
+
   const selectedBranch = req.params.branchId;
   const semesters  = await Semester.find({branchId : selectedBranch, _id : {$in : facultySem?.rolesId?.semester}}, {semesterNumber : 1, semesterCode : 1});
 
@@ -243,5 +244,19 @@ export const getSemesterForBranch = asyncErrorHandler(async (req, res, next) => 
     data: semesters,
   })
 
-
 })
+
+// we write code for get classroom for faculty
+export const getMyClassroom = asyncErrorHandler(async (req, res, next) => {
+  const id = req.user;
+  const {branch, semester} = req.body;
+
+  const classroom = await Classroom.find({branchId: branch, semesterId : semester, facultyId : id});
+
+  res.status(200).json({
+    success: true,
+    message: "Classrooms fetched successfully !",
+    data: classroom
+  })
+})
+ 

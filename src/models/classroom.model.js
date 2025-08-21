@@ -22,6 +22,11 @@ const classroomSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    facultyId: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Faculty",
+      required: true,
+    }],
     core: [
       {
         type: mongoose.Schema.Types.ObjectId,

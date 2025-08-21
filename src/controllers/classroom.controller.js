@@ -4,7 +4,7 @@ import { ErrorHandler } from "../errors/errorHandler.js";
 import { Classroom } from "../models/classroom.model.js";
 
 export const createClassroom = asyncErrorHandler(async (req, res, next) => {
-    const {branchId, semesterId, classroomName, classroomCode} = req.body;
+    const {branchId, semesterId, classroomName, classroomCode, facultyId} = req.body;
     // Validate the input data
     if (!branchId || !semesterId || !classroomName || !classroomCode) {
         return next(new ErrorHandler("Branch ID and Semester ID are required", 400));
@@ -21,6 +21,7 @@ export const createClassroom = asyncErrorHandler(async (req, res, next) => {
         semesterId,
         classroomName,
         classroomCode,
+        facultyId
     })
 
     res.status(201).json({

@@ -33,14 +33,12 @@ export const createClassroom = asyncErrorHandler(async (req, res, next) => {
 // now we write controller for add course in classroom.
 export const addSyllabus = asyncErrorHandler(async (req, res, next) => {
     const classroomId = req.params.id;
-    const { core, elective, lab } = req.body;
-
+    const syllabusId = req.body.syllabusId;
     if(!mongoose.isValidObjectId(classroomId)) return next(new ErrorHandler("Invalid classroom id !", 400));
 
-    await Classroom.findByIdAndUpdate(classroomId, { core, elective, lab }, {
-        new: true,
-        runValidators: true
-    });
+    if(!mongoose.isValidObjectId(syllabusId)) return next(new ErrorHandler("Invalid syllabus id !", 400));
+
+    await Classroom.findByIdAndUpdate(classroomId, {$set : {syllabus : syllabusId}});
 
     res.status(200).json({
         success: true,

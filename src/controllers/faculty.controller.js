@@ -250,7 +250,7 @@ export const getSemesterForBranch = asyncErrorHandler(async (req, res, next) => 
 // we write code for get classroom for faculty.
 export const getMyClassroomAndBatch = asyncErrorHandler(async (req, res, next) => {
   const id = req.user;
-  const {branch, semester} = req.body;
+  const {branch, semester} = req.query;
 
   const classroom = await Classroom.find({branchId: branch, semesterId : semester, facultyId : id}, {classroomName : 1, classroomCode : 1}).lean();
 

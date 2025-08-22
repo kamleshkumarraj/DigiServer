@@ -246,7 +246,7 @@ export const getSemesterForBranch = asyncErrorHandler(async (req, res, next) => 
 
 })
 
-// we write code for get classroom for faculty
+// we write code for get classroom for faculty.
 export const getMyClassroom = asyncErrorHandler(async (req, res, next) => {
   const id = req.user;
   const {branch, semester} = req.body;
@@ -258,5 +258,6 @@ export const getMyClassroom = asyncErrorHandler(async (req, res, next) => {
     message: "Classrooms fetched successfully !",
     data: classroom
   })
+
 })
  

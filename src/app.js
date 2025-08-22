@@ -10,7 +10,7 @@ import { semesterRouter } from "./routes/semester.routes.js";
 import { classroomRouter } from "./routes/classroom.routes.js";
 import { studentRouter } from "./routes/student.routes.js";
 import { facultyRouters } from "./routes/faculty.routes.js";
-import { syllabusRouter } from "./routes/syllabus.routes.js";
+import { courseRouter, syllabusRouter } from "./routes/courseRouter.routes.js";
 import { authRouter } from "./routes/auth.routes.js";
 import { batchRouter } from "./routes/batch.routes.js";
 import { parentRouter } from "./routes/parent.routes.js";
@@ -78,7 +78,7 @@ app.use("/api/v1/student", studentRouter);
 app.use("/api/v1/faculty", facultyRouters);
 
 // now we configure syllabus routes.
-app.use("/api/v1/syllabus", syllabusRouter);
+app.use("/api/v1/course", courseRouter);
 
 //now we configure batch routes.
 app.use("/api/v1/batch", batchRouter);

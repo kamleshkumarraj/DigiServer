@@ -5,6 +5,7 @@ import { Faculty } from "../models/faculty.model.js";
 import { User } from "../models/users.model.js";
 import { Semester } from "../models/semester.model.js";
 import { Classroom } from "../models/classroom.model.js";
+import { Batch } from "../models/batch.models.js";
 
 // now we write controller for update the profile of faculty.
 export const updateProfileFaculty = asyncErrorHandler(
@@ -247,17 +248,59 @@ export const getSemesterForBranch = asyncErrorHandler(async (req, res, next) => 
 })
 
 // we write code for get classroom for faculty.
-export const getMyClassroom = asyncErrorHandler(async (req, res, next) => {
+export const getMyClassroomAndBatch = asyncErrorHandler(async (req, res, next) => {
   const id = req.user;
   const {branch, semester} = req.body;
 
   const classroom = await Classroom.find({branchId: branch, semesterId : semester, facultyId : id});
 
+  const batch = await Batch.aggregate([
+    // Step 1: Find batches where faculty is assigned
+    {
+      $match: {
+        facultyId: new ObjectId(id)
+      }
+    },
+    // Step 2: Join with Classroom
+    {
+      $lookup: {
+        from: "classrooms",           // Classroom collection name
+        localField: "classroomId",    // field in Batch
+        foreignField: "_id",          // field in Classroom
+        as: "classroom"
+      }
+    },
+    // Step 3: Classroom is array, unwind it
+    { $unwind: "$classroom" },
+    // Step 4: Filter by branchId & semesterId
+    {
+      $match: {
+        "classroom.branchId": new ObjectId(branch),
+        "classroom.semesterId": new ObjectId(semester)
+      }
+    },
+    // Optional: Project final fields
+    {
+      $project: {
+        _id: 1,
+        batchName : 1
+      }
+    }
+  ]);
+
+  // now we from all batches which have is related from particular branch or semester.
+
+
+  if(!classroom || classroom.length === 0) {
+    return next(new ErrorHandler("No classroom found for this faculty !", 404));
+  }
+
   res.status(200).json({
     success: true,
     message: "Classrooms fetched successfully !",
-    data: classroom
+    data: {classroom, batch}
   })
 
 })
  
+// get self classroom and batch where we assign in particular branch or semester.

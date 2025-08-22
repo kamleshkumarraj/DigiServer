@@ -1,8 +1,6 @@
+import jwt from "jsonwebtoken";
 import { asyncErrorHandler } from "../errors/asynError.js";
 import { ErrorHandler } from "../errors/errorHandler.js";
-import jwt from "jsonwebtoken";
-import { Student } from "../models/student.model.js";
-import { Faculty } from "../models/faculty.model.js";
 import { User } from "../models/users.model.js";
 
 export const isAdmin = asyncErrorHandler((req, res, next) => {

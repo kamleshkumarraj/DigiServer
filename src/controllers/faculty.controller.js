@@ -252,20 +252,20 @@ export const getMyClassroomAndBatch = asyncErrorHandler(async (req, res, next) =
   const id = req.user;
   const {branch, semester} = req.body;
 
-  const classroom = await Classroom.find({branchId: branch, semesterId : semester, facultyId : id});
+  const classroom = await Classroom.find({branchId: branch, semesterId : semester, facultyId : id}, {classroomName : 1, classroomCode : 1}).lean();
 
   const batch = await Batch.aggregate([
     // Step 1: Find batches where faculty is assigned
     {
       $match: {
-        facultyId: new ObjectId(id)
+        faculty: new mongoose.Types.ObjectId(id)
       }
     },
     // Step 2: Join with Classroom
     {
       $lookup: {
         from: "classrooms",           // Classroom collection name
-        localField: "classroomId",    // field in Batch
+        localField: "classRoomId",    // field in Batch
         foreignField: "_id",          // field in Classroom
         as: "classroom"
       }
@@ -275,8 +275,8 @@ export const getMyClassroomAndBatch = asyncErrorHandler(async (req, res, next) =
     // Step 4: Filter by branchId & semesterId
     {
       $match: {
-        "classroom.branchId": new ObjectId(branch),
-        "classroom.semesterId": new ObjectId(semester)
+        "classroom.branchId": new mongoose.Types.ObjectId(branch),
+        "classroom.semesterId": new mongoose.Types.ObjectId(semester)
       }
     },
     // Optional: Project final fields
@@ -291,9 +291,7 @@ export const getMyClassroomAndBatch = asyncErrorHandler(async (req, res, next) =
   // now we from all batches which have is related from particular branch or semester.
 
 
-  if(!classroom || classroom.length === 0) {
-    return next(new ErrorHandler("No classroom found for this faculty !", 404));
-  }
+  
 
   res.status(200).json({
     success: true,

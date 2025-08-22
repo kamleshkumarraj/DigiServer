@@ -22,7 +22,7 @@ export const isTutor = asyncErrorHandler((req, res, next) => {
 })
 
 export const isHOD = asyncErrorHandler(async (req, res, next) => {
-    const hodId = req.body.hodId;
+    const hodId = req.user;
     const hod = await User.findById(hodId).populate({
         path : "rolesId",
         select : "role"

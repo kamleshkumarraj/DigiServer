@@ -4,4 +4,4 @@ import { createCourse } from "../controllers/course.controller.js";
 
 export const courseRouter = Router();
 
-courseRouter.route("/create-syllabus").post(isLoggedIn, isHOD, createCourse);
+courseRouter.route("/create-course").post(isLoggedIn, isHOD, createCourse);

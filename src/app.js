@@ -1,20 +1,21 @@
-import express from "express";
+import cookieParser from 'cookie-parser';
 import cors from "cors";
-import cookieParser from 'cookie-parser'
+import express from "express";
 
 // only all routes are imported here.
-import { universityRouter } from "./routes/university.routes.js";
-import { collageRouter } from "./routes/collage.routes.js";
-import { branchRouter } from "./routes/branch.routes.js";
-import { semesterRouter } from "./routes/semester.routes.js";
-import { classroomRouter } from "./routes/classroom.routes.js";
-import { studentRouter } from "./routes/student.routes.js";
-import { facultyRouters } from "./routes/faculty.routes.js";
-import { courseRouter, syllabusRouter } from "./routes/courseRouter.routes.js";
 import { authRouter } from "./routes/auth.routes.js";
 import { batchRouter } from "./routes/batch.routes.js";
-import { parentRouter } from "./routes/parent.routes.js";
+import { branchRouter } from "./routes/branch.routes.js";
+import { classroomRouter } from "./routes/classroom.routes.js";
+import { collageRouter } from "./routes/collage.routes.js";
 import { contactRouter } from "./routes/contact.routes.js";
+import { courseRouter } from "./routes/courseRouter.routes.js";
+import { facultyRouters } from "./routes/faculty.routes.js";
+import { parentRouter } from "./routes/parent.routes.js";
+import { semesterRouter } from "./routes/semester.routes.js";
+import { studentRouter } from "./routes/student.routes.js";
+import { universityRouter } from "./routes/university.routes.js";
+import { syllabusRouter } from './routes/syllabus.routes.js';
 
 export const app = express();
 
@@ -88,6 +89,9 @@ app.use("/api/v1/parent", parentRouter);
 
 // now we configure contact info routes.
 app.use("/api/v1/contact", contactRouter);
+
+// now we configure routes for syllabus.
+app.use("/api/v1/syllabus", syllabusRouter)
 
 app.use((err, req, res, next) => {
   console.log(err.stack)

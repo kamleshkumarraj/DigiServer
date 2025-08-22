@@ -15,6 +15,11 @@ const syllabusSchema = new mongoose.Schema({
     ref: "Semester",
     required: true,
   },
+  createdBy : {
+    type : mongoose.Schema.Types.ObjectId,
+    ref : "User",
+    required : true
+  },
   coreSubject: [
     {
       type: mongoose.Schema.Types.ObjectId,

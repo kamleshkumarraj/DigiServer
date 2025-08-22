@@ -27,24 +27,11 @@ const classroomSchema = new mongoose.Schema(
       ref: "Faculty",
       required: true,
     }],
-    core: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Course",
-      },
-    ],
-    elective: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Course",
-      },
-    ],
-    lab: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Course",
-      },
-    ],
+    syllabus: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Syllabus",
+      required: true,
+    },
   },
   { timestamps: true }
 );
